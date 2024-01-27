@@ -9,12 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/BattleScene.unity
-    guid: 210e070246ae23740af015f54ee27504
+    path: Assets/Scenes/HomeScene.unity
+    guid: 20c0199ce579d7b45a89ee53a1f80a0e
   - enabled: 1
     path: Assets/Scenes/PartyEditScene.unity
     guid: 4e1153af12dabb84b8b994c2ca0ef2c0
   - enabled: 1
     path: Assets/Scenes/StageSelectScene.unity
     guid: 8787ef4a512bc0246a9b3a2817c154b7
+  - enabled: 1
+    path: Assets/Scenes/BattleScene.unity
+    guid: 210e070246ae23740af015f54ee27504
   m_configObjects: {}
