@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // バトルのUIを扱う
@@ -7,8 +8,8 @@ public class BattleUIHandler : MonoBehaviour
 {
     // 残り時間を表示するテキスト
     [SerializeField] private TextMeshProUGUI timerText = null;
-
-    private float timer = 60;
+    // 残り何秒から開始するか
+    [SerializeField] private float timer = 60.0f;
 
     private void Start() {
         StartTimer();
