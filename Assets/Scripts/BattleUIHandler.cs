@@ -1,13 +1,15 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 // バトルのUIを扱う
 public class BattleUIHandler : MonoBehaviour
 {
     // 残り時間を表示するテキスト
-    [SerializeField] private TextMeshProUGUI timerText = null;
+    [SerializeField] private TextMeshProUGUI timeText = null;
+    // 残りの敵の数を表示するテキスト
+    [SerializeField] private TextMeshProUGUI countText = null;
+
     // 残り何秒から開始するか
     [SerializeField] private float timer = 60.0f;
 
@@ -23,8 +25,13 @@ public class BattleUIHandler : MonoBehaviour
     private IEnumerator OnStartTimer() {
         while (true) {
             timer -= Time.deltaTime;
-            timerText.text = $"残り時間 : {(int)timer}秒";
+            timeText.text = $"残り{(int)timer}秒";
             yield return null;
         }
+    }
+
+    // 残りの敵の数をテキストに反映させる
+    public void SetCountText(int count) {
+        countText.text = $"残り{count}体";
     }
 }
