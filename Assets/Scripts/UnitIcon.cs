@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-// ユニットのアイコン
+// 編成画面で使用するユニットのアイコン
 public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     // キャンバス
@@ -58,7 +58,7 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         }
     }
 
-    // シブリングインデックス取得してヒエラルキーの順番の変更
+    // ヒエラルキーの順番の変更
     public void SetSibligIndex(int index) {
         SiblingIndex = index;
         transform.SetSiblingIndex(SiblingIndex);
