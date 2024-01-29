@@ -18,5 +18,13 @@ public class GameController : MonoBehaviour {
             instance = value;
         }
     }
+
+    // 戦闘に使用するの3体の野菜を格納する
+    public List<Vegetable> MainVegetables { get; private set; } = new();
+
+    // 戦闘で使用する野菜のセット
+    public void SetMainVegetables(List<Vegetable> vegetables) {
+        MainVegetables = vegetables;
+    }
 }
 
