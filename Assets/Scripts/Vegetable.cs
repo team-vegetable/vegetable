@@ -12,6 +12,10 @@ public class Vegetable : ScriptableObject
     [SerializeField] private new string name = "";
     public string Name { get => name; }
 
+    [Header("画像")]
+    [SerializeField] private Sprite sprite = null;
+    public Sprite Sprite { get => sprite; }
+
 
     // 野菜ごとのID
     public enum VEGETABLE {
@@ -22,4 +26,11 @@ public class Vegetable : ScriptableObject
         // キャベツ
         Cabbage
     }
+}
+
+// 定数の管理
+public static class VegetableConstData {
+    // 戦闘に使用する野菜の数
+    public static readonly int MAIN_VEGETABLES_COUNT = 3;
+
 }

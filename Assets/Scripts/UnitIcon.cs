@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 // 編成画面で使用するユニットのアイコン
 public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    // 野菜(テスト用)
+    [SerializeField] private Vegetable vegetable = null;
+    public Vegetable Vegetable { get => vegetable; }
+
     // キャンバス
     private Canvas canvas = null;
     // ドラッグ開始したときの座標
