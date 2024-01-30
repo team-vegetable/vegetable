@@ -66,10 +66,4 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             onSwitch?.Invoke(gameObject, hitIcon.gameObject);
         }
     }
-
-    // ヒエラルキーの順番の変更
-    public void SetSibligIndex(int index) {
-        SiblingIndex = index;
-        transform.SetSiblingIndex(SiblingIndex);
-    }
 }
