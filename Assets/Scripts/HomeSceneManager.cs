@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,6 +15,9 @@ public class HomeSceneManager : MonoBehaviour
 
     // 放置した秒数掛ける何ポイントもらえるか
     [SerializeField] private int pointPerSecond = 1;
+
+    // 前回報酬を受け取った時間
+    private DateTime prevTime = default;
 
     private void Start() {
         // ボタンの登録
@@ -32,7 +36,16 @@ public class HomeSceneManager : MonoBehaviour
 
     // 報酬受け取りボタンを押したとき
     private void OnClickRewardRecievedButton() {
+        if (prevTime != default) {
+            var diff = DateTime.Now - prevTime;
+            Debug.Log($"{diff.TotalSeconds}秒間放置していました");
+        } 
+        else {
+            Debug.Log("初めて放置報酬を受け取った");
+        }
+        
 
+        prevTime = DateTime.Now;
     }
 
     // ステージセレクトボタンを押したとき

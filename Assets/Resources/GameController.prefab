@@ -44,3 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 321643cacf4b002418674ffa069ba6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainVegetables:
+  - {fileID: 11400000, guid: 827d7c431d6d7db478535a6b0387af63, type: 2}
+  - {fileID: 11400000, guid: 4602c5f7b160b5d4d8224a9885b1cd45, type: 2}
+  - {fileID: 11400000, guid: 0840892bcb9e11342ac41e3aca4b0afa, type: 2}

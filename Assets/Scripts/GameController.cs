@@ -19,12 +19,23 @@ public class GameController : MonoBehaviour {
         }
     }
 
+    // デバッグ用にメインの野菜を初期から指定する
+    [SerializeField] private List<Vegetable> mainVegetables = new();
+
     // 戦闘に使用するの3体の野菜を格納する
     public List<Vegetable> MainVegetables { get; private set; } = new();
+
+    private void Start() {
+        MainVegetables = mainVegetables;
+    }
 
     // 戦闘で使用する野菜のセット
     public void SetMainVegetables(List<Vegetable> vegetables) {
         MainVegetables = vegetables;
+    }
+
+    public void Test() {
+        MainVegetables = mainVegetables;
     }
 }
 

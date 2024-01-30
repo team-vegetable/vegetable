@@ -30,6 +30,8 @@ public class BattleSceneManager : MonoBehaviour
             mainVegetables.Add(child.gameObject);
         }
 
+        GameController.Instance.Test();
+
         // í“¬‚Ég—p‚·‚é–ìØ‚É‰æ‘œ‚Ì”½‰f
         // for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {
         //     var spriteRenderer = mainVegetables[index].GetComponent<SpriteRenderer>();
