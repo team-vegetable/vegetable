@@ -2,10 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 //　パーティー編成画面のUIの管理
 public class PartyEditUIHandler: MonoBehaviour
 {
+    // バトルシーンに遷移させるボタン(テスト用)
+    [SerializeField] private Button transitionBattleSceneButton = null;
     // 保存ボタン
     [SerializeField] private Button saveButton = null;
     // 戦闘に使用する野菜を格納する親オブジェクト
@@ -23,6 +26,9 @@ public class PartyEditUIHandler: MonoBehaviour
     private void Start() {
         saveButton.onClick.RemoveAllListeners();
         saveButton.onClick.AddListener(OnClickSaveButton);
+
+        transitionBattleSceneButton.onClick.RemoveAllListeners();
+        transitionBattleSceneButton.onClick.AddListener(OnClickTransitionBattleSceneButton);
 
         foreach (Transform child in mainVegetablesParent.transform) {
             mainVegetableObjects.Add(child.gameObject);
@@ -102,5 +108,10 @@ public class PartyEditUIHandler: MonoBehaviour
 
         // 他のシーンでも使用できるように保存
         GameController.Instance.SetMainVegetables(mainVegetables);
+    }
+
+    // バトルシーンに遷移させるボタンを押したとき(テスト用)
+    private void OnClickTransitionBattleSceneButton() {
+        SceneManager.LoadScene("BattleScene");
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,10 +31,10 @@ public class BattleSceneManager : MonoBehaviour
         }
 
         // í“¬‚Ég—p‚·‚é–ìØ‚É‰æ‘œ‚Ì”½‰f
-        for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {
-            var spriteRenderer = mainVegetables[index].GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = GameController.Instance.MainVegetables[index].Sprite;
-        }
+        // for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {
+        //     var spriteRenderer = mainVegetables[index].GetComponent<SpriteRenderer>();
+        //     spriteRenderer.sprite = GameController.Instance.MainVegetables[index].Sprite;
+        // }
     }
 
     private void Update() {

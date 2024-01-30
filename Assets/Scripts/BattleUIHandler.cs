@@ -13,6 +13,9 @@ public class BattleUIHandler : MonoBehaviour
     // テスト用に負けた判定にする
     [SerializeField] private Button loseButton = null;
 
+    // 敗北時のUI
+    [SerializeField] private LoseUI loseUI = null;
+     
     // 残り何秒から開始するか
     [SerializeField] private float timer = 60.0f;
 
@@ -43,6 +46,6 @@ public class BattleUIHandler : MonoBehaviour
 
     // テスト用の敗北ボタンを押したとき
     private void OnClickLoseButton() {
-
+        loseUI.ShowUI();
     }
 }
