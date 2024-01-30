@@ -9,9 +9,11 @@ public class PartyEditUIHandler: MonoBehaviour
     [SerializeField] private Button saveButton = null;
     // 戦闘に使用する野菜を格納する親オブジェクト
     [SerializeField] private Transform mainVegetablesParent = null;
+    // サブの野菜を格納する親オブジェクト
+    [SerializeField] private Transform reserveVegetablesParent = null;
 
     // 戦闘に使用する野菜を格納する
-    private List<Vegetable> mainVegetables = new();
+    private readonly List<Vegetable> mainVegetables = new();
 
     private void Start() {
         saveButton.onClick.RemoveAllListeners();
