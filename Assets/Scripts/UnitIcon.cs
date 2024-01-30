@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 // 編成画面で使用するユニットのアイコン
@@ -14,12 +15,18 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // ドラッグ開始したときの座標
     private Vector3 initPosition = new();
 
+    private UnityAction<GameObject, GameObject> onSwitch = null;
+
     // シブリングインデックス
     public int SiblingIndex { get; private set; } = 0;
 
     private void Start() {
         canvas = GetComponent<Canvas>();
         SiblingIndex = transform.GetSiblingIndex();
+    }
+
+    public void Init(UnityAction<GameObject, GameObject> callback) {
+        onSwitch = callback;
     }
 
     // ドラッグ開始
@@ -55,10 +62,8 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 continue;
             }
 
-            int otherSiblingIndex = hitIcon.SiblingIndex;
-            hitIcon.SetSibligIndex(SiblingIndex);
-            SiblingIndex = otherSiblingIndex;
-            transform.SetSiblingIndex(SiblingIndex);
+            // アイコンの入れ替え
+            onSwitch?.Invoke(gameObject, hitIcon.gameObject);
         }
     }
 

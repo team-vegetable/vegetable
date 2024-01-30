@@ -295,8 +295,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 451649985}
   m_HandleRect: {fileID: 451649984}
   m_Direction: 0
-  m_Value: -0.000003818674
-  m_Size: 0.91180795
+  m_Value: -0.0000006364457
+  m_Size: 0.91180724
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1327,7 +1327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveButton: {fileID: 1194042654}
   mainVegetablesParent: {fileID: 1394819778}
-  reserveVegetablesParent: {fileID: 0}
+  reserveVegetablesParent: {fileID: 1181676015}
 --- !u!1 &723158621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1740,7 +1740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -991.49927, y: 0}
+  m_AnchoredPosition: {x: -991.4999, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1181676016
