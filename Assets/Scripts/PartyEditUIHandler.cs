@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using CI.QuickSave;
 using UnityEditor;
-using UnityEditor.Build;
 using UnityEngine.Windows;
 
 //　パーティー編成画面のUIの管理
@@ -38,10 +37,6 @@ public class PartyEditUIHandler: MonoBehaviour
             //Password = "Password",
             //CompressionMode = CompressionMode.Gzip,
         };
-
-
-        // FileUtil.DeleteFileOrDirectory(path);
-
 
         // セーブデータが存在すれば保存データ読み込み
         var path = Application.persistentDataPath + "/QuickSave/" + VegetableConstData.PARTY_DATA + ".json";
@@ -119,12 +114,10 @@ public class PartyEditUIHandler: MonoBehaviour
     // 保存ボタンを押したとき
     private void OnClickSaveButton() {
         // 戦闘に使用する野菜の取得
-        // List<int> mainVegetableIDs = new();
-        // テスト用のデータ
-        List<int> mainVegetableIDs = new() { 1, 2, 3 };
+        List<int> mainVegetableIDs = new();
         foreach (Transform child in mainVegetablesParent.transform) {
             var id = child.GetComponent<UnitIcon>().Vegetable.ID;
-            // mainVegetableIDs.Add(id);
+            mainVegetableIDs.Add(id);
         }
 
         // 戦闘に使用する野菜の保存
@@ -134,7 +127,7 @@ public class PartyEditUIHandler: MonoBehaviour
             //CompressionMode = CompressionMode.Gzip,
         };
 
-        QuickSaveWriter writer = QuickSaveWriter.Create("PartyData", settings);
+        QuickSaveWriter writer = QuickSaveWriter.Create(VegetableConstData.PARTY_DATA, settings);
         writer.Write("MainVegetableIDs", mainVegetableIDs);
         writer.Commit();
     }
@@ -144,6 +137,7 @@ public class PartyEditUIHandler: MonoBehaviour
         SceneManager.LoadScene("BattleScene");
     }
 
+    // TODO : ここの処理はきりはなす
     private List<T> LoadScriptableObjectFromFolder<T>(string folderPath) where T : ScriptableObject {
         string[] guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}", new[] { folderPath });
         if (guids.Length <= 0) {
