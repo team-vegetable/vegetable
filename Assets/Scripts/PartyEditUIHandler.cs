@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using CI.QuickSave;
 using UnityEditor;
+using UnityEditor.Build;
+using UnityEngine.Windows;
 
 //　パーティー編成画面のUIの管理
 public class PartyEditUIHandler: MonoBehaviour
@@ -37,19 +39,26 @@ public class PartyEditUIHandler: MonoBehaviour
             //CompressionMode = CompressionMode.Gzip,
         };
 
-        // 保存データ読み込み
-        QuickSaveReader reader = QuickSaveReader.Create("PartyData", settings);
-        var mainVegetableIDs = reader.Read<List<int>>("MainVegetableIDs");
 
-        // メインの野菜アイコンの生成
-        var vegtableAssets = LoadScriptableObjectFromFolder<Vegetable>("Assets/ScriptableObjects");
-        foreach (var id in mainVegetableIDs) {
-            var asset = vegtableAssets.FirstOrDefault(e => e.ID == id);
-            if (asset == null) {
-                continue;
+        // FileUtil.DeleteFileOrDirectory(path);
+
+
+        // セーブデータが存在すれば保存データ読み込み
+        var path = Application.persistentDataPath + "/QuickSave/" + VegetableConstData.PARTY_DATA + ".json";
+        if (File.Exists(path)) {
+            QuickSaveReader reader = QuickSaveReader.Create(VegetableConstData.PARTY_DATA, settings);
+            var mainVegetableIDs = reader.Read<List<int>>("MainVegetableIDs");
+
+            // メインの野菜アイコンの生成
+            var vegtableAssets = LoadScriptableObjectFromFolder<Vegetable>("Assets/ScriptableObjects");
+            foreach (var id in mainVegetableIDs) {
+                var asset = vegtableAssets.FirstOrDefault(e => e.ID == id);
+                if (asset == null) {
+                    continue;
+                }
+                var icon = Instantiate(vegetableIcon, mainVegetablesParent);
+                icon.Init(asset, SwitchIcon);
             }
-            var icon = Instantiate(vegetableIcon, mainVegetablesParent);
-            icon.Init(asset, SwitchIcon);
         }
 
         // メインの野菜オブジェクトを取得

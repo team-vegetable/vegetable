@@ -33,4 +33,7 @@ public static class VegetableConstData {
     // 戦闘に使用する野菜の数
     public static readonly int MAIN_VEGETABLES_COUNT = 3;
 
+    // セーブデータのパス
+    // 編成状態
+    public static readonly string PARTY_DATA = "PartyData";
 }
