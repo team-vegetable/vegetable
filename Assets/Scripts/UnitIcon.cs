@@ -2,31 +2,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 // 編成画面で使用するユニットのアイコン
 public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    // 野菜(テスト用)
-    [SerializeField] private Vegetable vegetable = null;
-    public Vegetable Vegetable { get => vegetable; }
-
+    // 画像
+    private Image image = null;
     // キャンバス
     private Canvas canvas = null;
     // ドラッグ開始したときの座標
     private Vector3 initPosition = new();
-
+    // アイコンを入れ替えたときのイベント
     private UnityAction<GameObject, GameObject> onSwitch = null;
 
-    // シブリングインデックス
-    public int SiblingIndex { get; private set; } = 0;
+    // 野菜のデータ
+    public Vegetable Vegetable { get; private set; }
 
-    private void Start() {
-        canvas = GetComponent<Canvas>();
-        SiblingIndex = transform.GetSiblingIndex();
-    }
-
-    public void Init(UnityAction<GameObject, GameObject> callback) {
+    public void Init(Vegetable vegetable, UnityAction<GameObject, GameObject> callback) {
+        Vegetable = vegetable;
         onSwitch = callback;
+
+        image = GetComponent<Image>();
+        canvas = GetComponent<Canvas>();
+
+        image.sprite = Vegetable.Sprite;
     }
 
     // ドラッグ開始
