@@ -24,13 +24,13 @@ public class BattleSceneManager : MonoBehaviour
     private List<GameObject> mainVegetables = new();
 
     private void Start() {
-        battleUIHandler.SetCountText(count);
-
-        foreach (Transform child in mainVegetablesParent.transform) {
-            mainVegetables.Add(child.gameObject);
-        }
-
-        GameController.Instance.Test();
+        // battleUIHandler.SetCountText(count);
+        // 
+        // foreach (Transform child in mainVegetablesParent.transform) {
+        //     mainVegetables.Add(child.gameObject);
+        // }
+        // 
+        // GameController.Instance.Test();
 
         // í“¬‚Ég—p‚·‚é–ìØ‚É‰æ‘œ‚Ì”½‰f
         // for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {
@@ -40,15 +40,15 @@ public class BattleSceneManager : MonoBehaviour
     }
 
     private void Update() {
-        if (count <= 0) {
-            return;
-        }
-
-        timer += Time.deltaTime;
-        if (timer >= interval) {
-            timer = 0.0f;
-            Instantiate(prefab, parent);
-            battleUIHandler.SetCountText(--count);
-        }
+        // if (count <= 0) {
+        //     return;
+        // }
+        // 
+        // timer += Time.deltaTime;
+        // if (timer >= interval) {
+        //     timer = 0.0f;
+        //     Instantiate(prefab, parent);
+        //     battleUIHandler.SetCountText(--count);
+        // }
     }
 }
