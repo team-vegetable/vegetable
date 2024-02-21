@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // バトルの進行を管理する
@@ -23,18 +24,20 @@ public class BattleSceneManager : MonoBehaviour
     private void Start() {
         battleUIHandler.SetCountText(count);
 
-        // foreach (Transform child in mainVegetablesParent.transform) {
-        //     mainVegetables.Add(child.gameObject);
-        // }
-        // 
-        // GameController.Instance.Test();
+        // アセットと編成状態の読み込み
+        var vegetableAssets = LoadAsset.LoadFromFolder<Vegetable>(LoadAsset.VEGETABLE_PATH);
+        var mainVegetableIDs = QuickSave.Load<List<int>>(VegetableConstData.PARTY_DATA, "MainVegetableIDs");
 
         // 戦闘に使用する野菜に画像の反映
-        // for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {
-        //     var spriteRenderer = mainVegetables[index].GetComponent<SpriteRenderer>();
-        //     spriteRenderer.sprite = GameController.Instance.MainVegetables[index].Sprite;
-        // }
+        for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {
+            var child = mainVegetablesParent.GetChild(index).gameObject;
+            var spriteRenderer = child.GetComponent<SpriteRenderer>();
+            var vegetable = vegetableAssets.FirstOrDefault(e => e.ID == mainVegetableIDs[index]);
+            spriteRenderer.sprite = vegetable.Sprite;
+            mainVegetables.Add(child.gameObject);
+        }
 
+        // 動物のアセットの読み込み
         var animalAssets = LoadAsset.LoadFromFolder<Animal>(LoadAsset.ANIMAL_PATH);
         generateAnimals.Init(animalAssets);
     }

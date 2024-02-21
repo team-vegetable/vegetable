@@ -814,7 +814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e2069d06e2fabb409545cf46681c471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 6340539486651584188, guid: 859eddb3f23efe9448e5be69045be9c2, type: 3}
+  prefab: {fileID: 5616345169979406310, guid: f968ee088b619bb44ba8c425291bdd42, type: 3}
   parent: {fileID: 2133655938}
   vegetablePositions:
   - {fileID: 2065900849}
@@ -1148,7 +1148,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.38, y: 1.28, z: 0}
-  m_LocalScale: {x: 1.4, y: 1.4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 594621010}
@@ -1741,7 +1741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleUIHandler: {fileID: 2032538500}
-  generateAnimals: {fileID: 0}
+  generateAnimals: {fileID: 728485373}
   mainVegetablesParent: {fileID: 594621010}
   count: 5
   interval: 5
