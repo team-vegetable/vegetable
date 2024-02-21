@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 // バトルの進行を管理する
@@ -35,6 +36,9 @@ public class BattleSceneManager : MonoBehaviour
 
     private const int MAX_SORTING_ORDER = 100;
 
+    // 動物のアセットをリストで格納
+    private List<Animal> animalAssets = new();
+
     private void Start() {
         battleUIHandler.SetCountText(count);
 
@@ -49,16 +53,18 @@ public class BattleSceneManager : MonoBehaviour
         //     var spriteRenderer = mainVegetables[index].GetComponent<SpriteRenderer>();
         //     spriteRenderer.sprite = GameController.Instance.MainVegetables[index].Sprite;
         // }
+
+        animalAssets = LoadAsset.LoadFromFolder<Animal>(LoadAsset.ANIMAL_PATH);
     }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            // 動物の生成
             var animal = Instantiate(prefab, generatePosition.transform.position, Quaternion.identity, parent).GetComponent<Enemy>();
+            var asset = animalAssets.FirstOrDefault(e => e.ID == (int)Animal.ANIMAL.WildBoar);
 
             // TODO : とりあえず人参をめがけて移動しているので後程変更
             var targetPosition = new Vector2(vegetablePositions[0].position.x, vegetablePositions[0].position.y + frontAnimalsCount * offsetY);
-            animal.Init(targetPosition, MAX_SORTING_ORDER - frontAnimalsCount);
+            animal.Init(asset, targetPosition, MAX_SORTING_ORDER - frontAnimalsCount);
             frontAnimalsCount++;
         }
 

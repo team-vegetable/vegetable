@@ -1,17 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 野菜を攻撃する敵に共通の基底クラス(継承する予定)
 public class Enemy : MonoBehaviour
 {
-    // 移動スピード
-    [SerializeField] private int speed = 1;
-    // 攻撃範囲
-    [SerializeField] private int attackRange = 1;
-    // 最大HP
-    [SerializeField] private int maxHP = 1000;
-    
+    // 動物のステータスをまとめたもの
+    private Animal animal = null;
     // スプライトレンダラー
     private SpriteRenderer spriteRenderer = null;
     // 初期座標
@@ -34,13 +28,14 @@ public class Enemy : MonoBehaviour
     private State state = State.Target;
 
     // 初期化
-    public void Init(Vector2 target, int sortingOrder) {
+    public void Init(Animal animal, Vector2 target, int sortingOrder) {
+        this.animal = animal;
         this.target = target;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = sortingOrder;
         initPosition = transform.position;
-        currentHP = maxHP;
+        currentHP = animal.MaxHP;
     }
 
     private void Update() {
@@ -51,7 +46,7 @@ public class Enemy : MonoBehaviour
 
         Vector2 currentPosition = transform.position;
         Vector2 direction = target - currentPosition;
-        if (direction.magnitude <= attackRange && !isDying) {
+        if (direction.magnitude <= animal.AttackRange && !isDying) {
             isDying = true;
             state = State.Attack;
             StartCoroutine(OnDeadTemp());
@@ -63,7 +58,7 @@ public class Enemy : MonoBehaviour
             if (state == State.Dying) {
                 direction = initPosition - currentPosition;
             }
-            transform.Translate(speed * Time.deltaTime * direction.normalized);
+            transform.Translate(animal.Speed * Time.deltaTime * direction.normalized);
         }
     }
     
