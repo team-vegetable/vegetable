@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using CI.QuickSave;
-using UnityEditor;
 using UnityEngine.Windows;
 
 //　パーティー編成画面のUIの管理
@@ -45,7 +44,7 @@ public class PartyEditUIHandler: MonoBehaviour
             var mainVegetableIDs = reader.Read<List<int>>("MainVegetableIDs");
 
             // メインの野菜アイコンの生成
-            var vegtableAssets = LoadScriptableObjectFromFolder<Vegetable>("Assets/ScriptableObjects");
+            var vegtableAssets = LoadAsset.LoadFromFolder<Vegetable>(LoadAsset.VEGETABLE_PATH);
             foreach (var id in mainVegetableIDs) {
                 var asset = vegtableAssets.FirstOrDefault(e => e.ID == id);
                 if (asset == null) {
@@ -135,22 +134,5 @@ public class PartyEditUIHandler: MonoBehaviour
     // バトルシーンに遷移させるボタンを押したとき(テスト用)
     private void OnClickTransitionBattleSceneButton() {
         SceneManager.LoadScene("BattleScene");
-    }
-
-    // TODO : ここの処理はきりはなす
-    private List<T> LoadScriptableObjectFromFolder<T>(string folderPath) where T : ScriptableObject {
-        string[] guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}", new[] { folderPath });
-        if (guids.Length <= 0) {
-            Debug.LogError("パスの指定が間違っています");
-            return null;
-        }
-
-        List<T> vegetables = new();
-        foreach (var guid in guids) {
-            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-            var asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
-            vegetables.Add(asset);
-        }
-        return vegetables;
     }
 }
