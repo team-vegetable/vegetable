@@ -9,7 +9,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int speed = 1;
     // 攻撃範囲
     [SerializeField] private int attackRange = 1;
-
+    // 最大HP
+    [SerializeField] private int maxHP = 1000;
+    
     // スプライトレンダラー
     private SpriteRenderer spriteRenderer = null;
     // 初期座標
@@ -18,6 +20,8 @@ public class Enemy : MonoBehaviour
     private Vector2 target = new();
 
     private bool isDying = false;
+    // 現在のHP
+    private int currentHP = 0;
 
     private enum State {
         // 狙う
@@ -36,6 +40,7 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = sortingOrder;
         initPosition = transform.position;
+        currentHP = maxHP;
     }
 
     private void Update() {
@@ -64,7 +69,14 @@ public class Enemy : MonoBehaviour
     
     // 仮の死亡処理
     private IEnumerator OnDeadTemp() {
-        yield return new WaitForSeconds(2.0f);
+        while (true) {
+            currentHP--;
+            if (currentHP <= 0) {
+                break;
+            }
+            yield return null;
+        }
+
         state = State.Dying;
         spriteRenderer.flipX = !spriteRenderer.flipX;
     }
