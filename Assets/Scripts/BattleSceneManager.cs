@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 // バトルの進行を管理する
@@ -7,37 +6,19 @@ public class BattleSceneManager : MonoBehaviour
 {
     // バトルに必要なUI周り
     [SerializeField] private BattleUIHandler battleUIHandler = null;
+    // 動物生成用
+    [SerializeField] private GenerateAnimals generateAnimals = null;
     // 戦闘に使用する野菜を格納する親オブジェクト
     [SerializeField] private Transform mainVegetablesParent = null;
-    // 3体の野菜の座標
-    [SerializeField] private List<Transform> vegetablePositions = null;
-
-    // 生成する敵
-    [SerializeField] private GameObject prefab = null;
-    // 敵を生成する座標
-    [SerializeField] private Transform generatePosition = null;
-    // 生成する敵の親オブジェクト
-    [SerializeField] private Transform parent = null;
 
     // バトル開始時の残りの敵の数
     [SerializeField] private int count = 5;
     // 生成するインターバル
     [SerializeField] private int interval = 0;
 
-    // 連続で生成したときのYオフセット(重ならないようにするため)
-    [SerializeField] private float offsetY = 0.0f;
-
     private float timer = 1.0f;
     // 戦闘に使用する野菜を格納する
     private List<GameObject> mainVegetables = new();
-
-    // 手前の野菜を攻撃している動物の数
-    private int frontAnimalsCount = 0;
-
-    private const int MAX_SORTING_ORDER = 100;
-
-    // 動物のアセットをリストで格納
-    private List<Animal> animalAssets = new();
 
     private void Start() {
         battleUIHandler.SetCountText(count);
@@ -54,18 +35,13 @@ public class BattleSceneManager : MonoBehaviour
         //     spriteRenderer.sprite = GameController.Instance.MainVegetables[index].Sprite;
         // }
 
-        animalAssets = LoadAsset.LoadFromFolder<Animal>(LoadAsset.ANIMAL_PATH);
+        var animalAssets = LoadAsset.LoadFromFolder<Animal>(LoadAsset.ANIMAL_PATH);
+        generateAnimals.Init(animalAssets);
     }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            var animal = Instantiate(prefab, generatePosition.transform.position, Quaternion.identity, parent).GetComponent<Enemy>();
-            var asset = animalAssets.FirstOrDefault(e => e.ID == (int)Animal.ANIMAL.WildBoar);
-
-            // TODO : とりあえず人参をめがけて移動しているので後程変更
-            var targetPosition = new Vector2(vegetablePositions[0].position.x, vegetablePositions[0].position.y + frontAnimalsCount * offsetY);
-            animal.Init(asset, targetPosition, MAX_SORTING_ORDER - frontAnimalsCount);
-            frontAnimalsCount++;
+            generateAnimals.Generate();
         }
 
         // if (count <= 0) {

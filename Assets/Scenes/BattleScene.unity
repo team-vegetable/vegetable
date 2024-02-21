@@ -779,8 +779,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 728485372}
+  - component: {fileID: 728485373}
   m_Layer: 0
-  m_Name: GeneratePosition
+  m_Name: GenerateAnimals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -801,6 +802,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1659292104}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &728485373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728485371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2069d06e2fabb409545cf46681c471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6340539486651584188, guid: 859eddb3f23efe9448e5be69045be9c2, type: 3}
+  parent: {fileID: 2133655938}
+  vegetablePositions:
+  - {fileID: 2065900849}
+  - {fileID: 1553306637}
+  - {fileID: 1038759203}
+  offsetY: 0.5
 --- !u!1 &846702210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1703,8 +1723,8 @@ Transform:
   - {fileID: 519420032}
   - {fileID: 1542509900}
   - {fileID: 594621010}
-  - {fileID: 2133655938}
   - {fileID: 728485372}
+  - {fileID: 2133655938}
   - {fileID: 2032538496}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1721,17 +1741,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleUIHandler: {fileID: 2032538500}
+  generateAnimals: {fileID: 0}
   mainVegetablesParent: {fileID: 594621010}
-  vegetablePositions:
-  - {fileID: 2065900849}
-  - {fileID: 1553306637}
-  - {fileID: 1038759203}
-  prefab: {fileID: 5616345169979406310, guid: f968ee088b619bb44ba8c425291bdd42, type: 3}
-  generatePosition: {fileID: 728485372}
-  parent: {fileID: 2133655938}
   count: 5
   interval: 5
-  offsetY: 0.5
 --- !u!1 &1892566429
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,7 +2128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2133655938}
   m_Layer: 0
-  m_Name: AnimalsParent
+  m_Name: Animals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
