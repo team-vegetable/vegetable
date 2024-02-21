@@ -1997,6 +1997,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cbd5875647da2458f444593d997d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  icons:
+  - {fileID: 299533259}
+  - {fileID: 851864686}
+  - {fileID: 1058555221}
   timeText: {fileID: 1892566431}
   countText: {fileID: 857277002}
   loseButton: {fileID: 299533261}

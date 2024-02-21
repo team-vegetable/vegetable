@@ -12,9 +12,13 @@ public class Vegetable : ScriptableObject
     [SerializeField] private new string name = "";
     public string Name { get => name; }
 
-    [Header("画像")]
-    [SerializeField] private Sprite sprite = null;
-    public Sprite Sprite { get => sprite; }
+    [Header("バトルに使用する画像")]
+    [SerializeField] private Sprite battleSprite = null;
+    public Sprite BattleSprite { get => battleSprite; }
+
+    [Header("アイコン")]
+    [SerializeField] private Sprite icon = null;
+    public Sprite Icon { get => icon; }
 
 
     // 野菜ごとのID

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 // バトルのUIを扱う
 public class BattleUIHandler : MonoBehaviour
 {
+    // 野菜のアイコン
+    [SerializeField] private List<Image> icons = null;
     // 残り時間を表示するテキスト
     [SerializeField] private TextMeshProUGUI timeText = null;
     // 残りの敵の数を表示するテキスト
@@ -29,6 +32,11 @@ public class BattleUIHandler : MonoBehaviour
     // 残り時間のタイマーをスタートさせる
     public void StartTimer() {
         StartCoroutine(OnStartTimer());
+    }
+
+    // 野菜のアイコンのセット
+    public void SetIcon(Sprite sprite, int index) {
+        icons[index].sprite = sprite;
     }
 
     private IEnumerator OnStartTimer() {

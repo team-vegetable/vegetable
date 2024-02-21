@@ -26,14 +26,18 @@ public class BattleSceneManager : MonoBehaviour
 
         // アセットと編成状態の読み込み
         var vegetableAssets = LoadAsset.LoadFromFolder<Vegetable>(LoadAsset.VEGETABLE_PATH);
+
+        // TODO : セーブデータが無かったらここでエラー落ちするから何かする
         var mainVegetableIDs = QuickSave.Load<List<int>>(VegetableConstData.PARTY_DATA, "MainVegetableIDs");
 
         // 戦闘に使用する野菜に画像の反映
         for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {
             var child = mainVegetablesParent.GetChild(index).gameObject;
-            var spriteRenderer = child.GetComponent<SpriteRenderer>();
             var vegetable = vegetableAssets.FirstOrDefault(e => e.ID == mainVegetableIDs[index]);
-            spriteRenderer.sprite = vegetable.Sprite;
+
+            var spriteRenderer = child.GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = vegetable.BattleSprite;
+            battleUIHandler.SetIcon(vegetable.Icon, index);
             mainVegetables.Add(child.gameObject);
         }
 
