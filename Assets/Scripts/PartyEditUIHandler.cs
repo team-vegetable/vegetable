@@ -3,8 +3,6 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using CI.QuickSave;
-using UnityEngine.Windows;
 
 //　パーティー編成画面のUIの管理
 public class PartyEditUIHandler: MonoBehaviour
@@ -31,17 +29,9 @@ public class PartyEditUIHandler: MonoBehaviour
         transitionBattleSceneButton.onClick.RemoveAllListeners();
         transitionBattleSceneButton.onClick.AddListener(OnClickTransitionBattleSceneButton);
 
-        QuickSaveSettings settings = new() {
-            //SecurityMode = SecurityMode.Aes,
-            //Password = "Password",
-            //CompressionMode = CompressionMode.Gzip,
-        };
-
         // セーブデータが存在すれば保存データ読み込み
-        var path = Application.persistentDataPath + "/QuickSave/" + VegetableConstData.PARTY_DATA + ".json";
-        if (File.Exists(path)) {
-            QuickSaveReader reader = QuickSaveReader.Create(VegetableConstData.PARTY_DATA, settings);
-            var mainVegetableIDs = reader.Read<List<int>>("MainVegetableIDs");
+        if (QuickSave.Exists(VegetableConstData.PARTY_DATA)) {
+            var mainVegetableIDs = QuickSave.Load<List<int>>(VegetableConstData.PARTY_DATA, "MainVegetableIDs");
 
             // メインの野菜アイコンの生成
             var vegtableAssets = LoadAsset.LoadFromFolder<Vegetable>(LoadAsset.VEGETABLE_PATH);
@@ -81,24 +71,25 @@ public class PartyEditUIHandler: MonoBehaviour
             hitIcon.transform.SetSiblingIndex(moveSiblingIndex);
         }
         else {
-            moveIcon.transform.SetParent(null);
-            hitIcon.transform.SetParent(null);
+            // メインとサブの入れ替えは一旦コメントアウト
+            //moveIcon.transform.SetParent(null);
+            //hitIcon.transform.SetParent(null);
 
-            // メインからサブに入れ替えた場合
-            if (IsSwitchingMainToSub(moveIcon, hitIcon)) {
-                moveIcon.transform.SetParent(reserveVegetablesParent);
-                hitIcon.transform.SetParent(mainVegetablesParent);
-                (reserveVegetableObjects[hitSiblingIndex], mainVegetableObjects[moveSiblingIndex]) = (mainVegetableObjects[moveSiblingIndex], reserveVegetableObjects[hitSiblingIndex]);
-            }
-            // サブからメインに入れ替えた場合
-            else {
-                moveIcon.transform.SetParent(mainVegetablesParent);
-                hitIcon.transform.SetParent(reserveVegetablesParent);
-                (reserveVegetableObjects[moveSiblingIndex], mainVegetableObjects[hitSiblingIndex]) = (mainVegetableObjects[hitSiblingIndex], reserveVegetableObjects[moveSiblingIndex]);
-            }
+            //// メインからサブに入れ替えた場合
+            //if (IsSwitchingMainToSub(moveIcon, hitIcon)) {
+            //    moveIcon.transform.SetParent(reserveVegetablesParent);
+            //    hitIcon.transform.SetParent(mainVegetablesParent);
+            //    (reserveVegetableObjects[hitSiblingIndex], mainVegetableObjects[moveSiblingIndex]) = (mainVegetableObjects[moveSiblingIndex], reserveVegetableObjects[hitSiblingIndex]);
+            //}
+            //// サブからメインに入れ替えた場合
+            //else {
+            //    moveIcon.transform.SetParent(mainVegetablesParent);
+            //    hitIcon.transform.SetParent(reserveVegetablesParent);
+            //    (reserveVegetableObjects[moveSiblingIndex], mainVegetableObjects[hitSiblingIndex]) = (mainVegetableObjects[hitSiblingIndex], reserveVegetableObjects[moveSiblingIndex]);
+            //}
 
-            moveIcon.transform.SetSiblingIndex(hitSiblingIndex);
-            hitIcon.transform.SetSiblingIndex(moveSiblingIndex);
+            //moveIcon.transform.SetSiblingIndex(hitSiblingIndex);
+            //hitIcon.transform.SetSiblingIndex(moveSiblingIndex);
         }
     }
 
@@ -120,15 +111,7 @@ public class PartyEditUIHandler: MonoBehaviour
         }
 
         // 戦闘に使用する野菜の保存
-        QuickSaveSettings settings = new() {
-            //SecurityMode = SecurityMode.Aes,
-            //Password = "Password",
-            //CompressionMode = CompressionMode.Gzip,
-        };
-
-        QuickSaveWriter writer = QuickSaveWriter.Create(VegetableConstData.PARTY_DATA, settings);
-        writer.Write("MainVegetableIDs", mainVegetableIDs);
-        writer.Commit();
+        QuickSave.Save(VegetableConstData.PARTY_DATA, "MainVegetableIDs", mainVegetableIDs);
     }
 
     // バトルシーンに遷移させるボタンを押したとき(テスト用)

@@ -9,7 +9,7 @@ public class ResetPartyDataEditor : Editor
 {
     private static readonly string path = Application.persistentDataPath + "/QuickSave/" + VegetableConstData.PARTY_DATA + ".json";
 
-    // ID順にソート
+    // パーティー編成をリセットしてから新規で作成する
     [MenuItem("Debug/メイン編成のリセット")]
     private static void ResetPartyData() {
         if (File.Exists(path)) {
@@ -18,15 +18,17 @@ public class ResetPartyDataEditor : Editor
 
         // 新しくセーブデータの作成
         List<int> mainVegetableIDs = new() { (int)Vegetable.VEGETABLE.Carrot, (int)Vegetable.VEGETABLE.CherryTomato, (int)Vegetable.VEGETABLE.Cabbage };
-        QuickSaveSettings settings = new() {
-            //SecurityMode = SecurityMode.Aes,
-            //Password = "Password",
-            //CompressionMode = CompressionMode.Gzip,
-        };
+        QuickSave.Save(VegetableConstData.PARTY_DATA, "MainVegetableIDs", mainVegetableIDs);
 
-        QuickSaveWriter writer = QuickSaveWriter.Create(VegetableConstData.PARTY_DATA, settings);
-        writer.Write("MainVegetableIDs", mainVegetableIDs);
-        writer.Commit();
+        //QuickSaveSettings settings = new() {
+        //    //SecurityMode = SecurityMode.Aes,
+        //    //Password = "Password",
+        //    //CompressionMode = CompressionMode.Gzip,
+        //};
+
+        //QuickSaveWriter writer = QuickSaveWriter.Create(VegetableConstData.PARTY_DATA, settings);
+        //writer.Write("MainVegetableIDs", mainVegetableIDs);
+        //writer.Commit();
 
         if (File.Exists(path)) {
             Debug.Log("<color=cyan>セーブデータの削除と新規のセーブデータの追加</color>");
