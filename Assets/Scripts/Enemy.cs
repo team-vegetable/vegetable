@@ -1,9 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 野菜を攻撃する敵に共通の基底クラス(継承する予定)
 public class Enemy : MonoBehaviour
 {
+    // HPバー
+    [SerializeField] private Image hpBar = null;
+
     // 動物のステータスをまとめたもの
     private Animal animal = null;
     // スプライトレンダラー
@@ -44,12 +48,15 @@ public class Enemy : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space) && state != State.Dying) {
+            UpdateCurrentHP();
+        }
+
         Vector2 currentPosition = transform.position;
         Vector2 direction = target - currentPosition;
         if (direction.magnitude <= animal.AttackRange && !isDying) {
             isDying = true;
             state = State.Attack;
-            StartCoroutine(OnDeadTemp());
             return;
         }
 
@@ -61,18 +68,15 @@ public class Enemy : MonoBehaviour
             transform.Translate(animal.Speed * Time.deltaTime * direction.normalized);
         }
     }
-    
-    // 仮の死亡処理
-    private IEnumerator OnDeadTemp() {
-        while (true) {
-            currentHP--;
-            if (currentHP <= 0) {
-                break;
-            }
-            yield return null;
+
+    // 現在のHPを更新する
+    private void UpdateCurrentHP() {
+        currentHP -= 100;
+        if (currentHP <= 0) {
+            state = State.Dying;
+            spriteRenderer.flipX = !spriteRenderer.flipX;
         }
 
-        state = State.Dying;
-        spriteRenderer.flipX = !spriteRenderer.flipX;
+        hpBar.fillAmount = (float)currentHP / animal.MaxHP;
     }
 }
