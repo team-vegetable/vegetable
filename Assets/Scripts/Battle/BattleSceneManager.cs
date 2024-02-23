@@ -26,9 +26,14 @@ public class BattleSceneManager : MonoBehaviour
 
         // アセットと編成状態の読み込み
         var vegetableAssets = LoadAsset.LoadFromFolder<Vegetable>(LoadAsset.VEGETABLE_PATH);
-
-        // TODO : セーブデータが無かったらここでエラー落ちするから何かする
         var mainVegetableIDs = QuickSave.Load<List<int>>(VegetableConstData.PARTY_DATA, "MainVegetableIDs");
+
+#if UNITY_EDITOR
+        // セーブデータを作ってなければ初期の野菜をセットする
+        if (mainVegetableIDs == default) {
+            mainVegetableIDs = new() { (int)Vegetable.VEGETABLE.Carrot, (int)Vegetable.VEGETABLE.CherryTomato, (int)Vegetable.VEGETABLE.Cabbage };
+        }
+#endif
 
         // 戦闘に使用する野菜に画像の反映
         for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {

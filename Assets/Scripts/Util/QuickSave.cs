@@ -19,7 +19,15 @@ public static class QuickSave
     }
 
     // ロード
-    public static T Load<T>(string fileName, string key) {
+    public static T Load<T>(string fileName, string key, T defaultValue = default) {
+        if (!Exists(fileName)) {
+            if (defaultValue == null) {
+                return default;
+            }
+            // 新規でセーブデータの作成
+            Save(fileName, key, defaultValue);
+        }
+
         QuickSaveSettings settings = new() {
             //SecurityMode = SecurityMode.Aes,
             //Password = "Password",
