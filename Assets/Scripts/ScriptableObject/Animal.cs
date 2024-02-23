@@ -30,6 +30,10 @@ public class Animal : ScriptableObject
     [SerializeField] private Sprite sprite = null;
     public Sprite Sprite { get => sprite; }
 
+    [Header("プレハブ")]
+    [SerializeField] private GameObject prefab = null;
+    public GameObject Prefab { get => prefab; }
+
     // 動物ごとのID
     public enum ANIMAL {
         // イノシシ

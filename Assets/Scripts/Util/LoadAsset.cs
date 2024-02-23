@@ -10,6 +10,8 @@ public static class LoadAsset
     public static readonly string VEGETABLE_PATH = "Assets/ScriptableObjects/Vegetable";
     // 動物のScraiptbleObjectを格納するパス
     public static readonly string ANIMAL_PATH = "Assets/ScriptableObjects/Animal";
+    // 敵の生成のScraiptbleObjectを格納するパス
+    public static readonly string SPAWN_DATA_PATH = "Assets/ScriptableObjects/SpawnData";
 
     // 指定したフォルダーから全てのScraiptableObjectを取得する
     public static List<T> LoadFromFolder<T>(string folderPath) where T : ScriptableObject {

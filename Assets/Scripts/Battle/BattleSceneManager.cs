@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UniRx;
 
 // バトルの進行を管理する
 public class BattleSceneManager : MonoBehaviour
@@ -14,17 +15,24 @@ public class BattleSceneManager : MonoBehaviour
 
     // バトル開始時の残りの敵の数
     [SerializeField] private int count = 5;
-    // 生成するインターバル
-    [SerializeField] private int interval = 0;
-
-    private float timer = 1.0f;
     // 戦闘に使用する野菜を格納する
     private List<GameObject> mainVegetables = new();
+
+
+    private EnemySpawnData spawnData = null;
+    private int currentIndex = 0;
+    private float timer = 0.0f;
+
+    private List<bool> isGenetate = new() { false, false};
 
     private void Start() {
         battleUIHandler.SetCountText(count);
 
-        // アセットと編成状態の読み込み
+        // 敵の生成を管理するアセットの読み込み
+        // 現在はステージ１決め打ち
+        spawnData = LoadAsset.LoadFromFolder<EnemySpawnData>(LoadAsset.SPAWN_DATA_PATH).FirstOrDefault(e => e.StageID == 1);
+
+        // 野菜のアセットと編成状態の読み込み
         var vegetableAssets = LoadAsset.LoadFromFolder<Vegetable>(LoadAsset.VEGETABLE_PATH);
         var mainVegetableIDs = QuickSave.Load<List<int>>(VegetableConstData.PARTY_DATA, "MainVegetableIDs");
 
@@ -43,28 +51,41 @@ public class BattleSceneManager : MonoBehaviour
             var spriteRenderer = child.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = vegetable.BattleSprite;
             battleUIHandler.SetIcon(vegetable.Icon, index);
-            mainVegetables.Add(child.gameObject);
+            // mainVegetables.Add(child.gameObject);
         }
 
         // 動物のアセットの読み込み
         var animalAssets = LoadAsset.LoadFromFolder<Animal>(LoadAsset.ANIMAL_PATH);
         generateAnimals.Init(animalAssets);
+
+        //Observable.EveryUpdate()
+        //    .Subscribe(_ => UpdateTimer())
+        //    .AddTo(this);
     }
+
+    //private void UpdateTimer() {
+    //    timer += Time.deltaTime;
+    //    if (currentIndex < spawnData.SpawnMapList.Count && spawnData.SpawnMapList[currentIndex] != null) {
+    //        if (spawnData.SpawnMapList[currentIndex].Interval >= timer) {
+    //            timer = 0.0f;
+    //            generateAnimals.Generate(spawnData.SpawnMapList[currentIndex].Animal);
+    //            currentIndex++;
+    //        }
+    //    }
+    //}
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            generateAnimals.Generate();
+            generateAnimals.Generate(spawnData.SpawnMapList[currentIndex++].Animal);
         }
 
-        // if (count <= 0) {
-        //     return;
-        // }
-        // 
-        // timer += Time.deltaTime;
-        // if (timer >= interval) {
-        //     timer = 0.0f;
-        //     Instantiate(prefab, parent);
-        //     battleUIHandler.SetCountText(--count);
-        // }
+        //timer += Time.deltaTime;
+        //if (currentIndex < spawnData.SpawnMapList.Count && spawnData.SpawnMapList[currentIndex] != null) {
+        //    if (spawnData.SpawnMapList[currentIndex].Interval >= timer) {
+        //        timer = 0.0f;
+        //        generateAnimals.Generate(spawnData.SpawnMapList[currentIndex].Animal);
+        //        currentIndex++;
+        //    }
+        //}
     }
 }

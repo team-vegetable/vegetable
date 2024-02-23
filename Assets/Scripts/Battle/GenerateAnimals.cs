@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
 
 // バトル時の動物生成用のクラス
 public class GenerateAnimals : MonoBehaviour
@@ -36,6 +37,16 @@ public class GenerateAnimals : MonoBehaviour
         // TODO : とりあえず人参をめがけて移動しているので後程変更
         var targetPosition = new Vector2(vegetablePositions[0].position.x, vegetablePositions[0].position.y + frontAnimalsCount * offsetY);
         animal.Init(asset, targetPosition, MAX_SORTING_ORDER - frontAnimalsCount);
+        frontAnimalsCount++;
+    }
+
+    public void Generate(Animal animalData) {
+        Debug.Log("GENERATE");
+        var animal = Instantiate(animalData.Prefab, transform.position, Quaternion.identity, parent).GetComponent<Enemy>();
+
+        // TODO : とりあえず人参をめがけて移動しているので後程変更
+        var targetPosition = new Vector2(vegetablePositions[0].position.x, vegetablePositions[0].position.y + frontAnimalsCount * offsetY);
+        animal.Init(animalData, targetPosition, MAX_SORTING_ORDER - frontAnimalsCount);
         frontAnimalsCount++;
     }
 }

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d4202065087ad4387895a3f90f15ff, type: 3}
   m_Name: EnemySpawnData
   m_EditorClassIdentifier: 
-  stageID: 0
-  spawnMap:
-    prefab: {fileID: 0}
-    interval: 0
+  stageID: 1
+  spawnMapList:
+  - animal: {fileID: 11400000, guid: 7df662bf9f559b5429a62c4f711ace35, type: 2}
+    interval: 2
+  - animal: {fileID: 11400000, guid: 7df662bf9f559b5429a62c4f711ace35, type: 2}
+    interval: 5
