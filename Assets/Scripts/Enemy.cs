@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 // –ìØ‚ğUŒ‚‚·‚é“G‚É‹¤’Ê‚ÌŠî’êƒNƒ‰ƒX(Œp³‚·‚é—\’è)
@@ -16,6 +17,9 @@ public class Enemy : MonoBehaviour
     private Vector2 initPosition = new();
     // UŒ‚‚·‚é–ìØ‚ÌÀ•W
     private Vector2 target = new();
+    // €–S‚ÌƒCƒxƒ“ƒg
+    private UnityAction onDead = null;
+
 
     private bool isDying = false;
     // Œ»İ‚ÌHP
@@ -32,9 +36,10 @@ public class Enemy : MonoBehaviour
     private State state = State.Target;
 
     // ‰Šú‰»
-    public void Init(Animal animal, Vector2 target, int sortingOrder) {
+    public void Init(Animal animal, Vector2 target, int sortingOrder, UnityAction onDead) {
         this.animal = animal;
         this.target = target;
+        this.onDead = onDead;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = sortingOrder;
@@ -74,6 +79,7 @@ public class Enemy : MonoBehaviour
         currentHP -= 100;
         if (currentHP <= 0) {
             state = State.Dying;
+            onDead?.Invoke();
             spriteRenderer.flipX = !spriteRenderer.flipX;
         }
 

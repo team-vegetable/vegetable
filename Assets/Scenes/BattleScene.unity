@@ -1021,7 +1021,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -432, y: 0}
+  m_AnchoredPosition: {x: -500, y: 0}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &857277002
@@ -1744,7 +1744,6 @@ MonoBehaviour:
   generateAnimals: {fileID: 728485373}
   mainVegetablesParent: {fileID: 594621010}
   count: 5
-  interval: 5
 --- !u!1 &1892566429
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 
 // バトル時の動物生成用のクラス
 public class GenerateAnimals : MonoBehaviour
@@ -29,24 +30,12 @@ public class GenerateAnimals : MonoBehaviour
         this.animalAssets = animalAssets;
     }
 
-    // 生成
-    public void Generate() {
-        var animal = Instantiate(prefab, transform.position, Quaternion.identity, parent).GetComponent<Enemy>();
-        var asset = animalAssets.FirstOrDefault(e => e.ID == (int)Animal.ANIMAL.WildBoar);
-
-        // TODO : とりあえず人参をめがけて移動しているので後程変更
-        var targetPosition = new Vector2(vegetablePositions[0].position.x, vegetablePositions[0].position.y + frontAnimalsCount * offsetY);
-        animal.Init(asset, targetPosition, MAX_SORTING_ORDER - frontAnimalsCount);
-        frontAnimalsCount++;
-    }
-
-    public void Generate(Animal animalData) {
-        Debug.Log("GENERATE");
+    public void Generate(Animal animalData, UnityAction onDead) {
         var animal = Instantiate(animalData.Prefab, transform.position, Quaternion.identity, parent).GetComponent<Enemy>();
 
         // TODO : とりあえず人参をめがけて移動しているので後程変更
         var targetPosition = new Vector2(vegetablePositions[0].position.x, vegetablePositions[0].position.y + frontAnimalsCount * offsetY);
-        animal.Init(animalData, targetPosition, MAX_SORTING_ORDER - frontAnimalsCount);
+        animal.Init(animalData, targetPosition, MAX_SORTING_ORDER - frontAnimalsCount, onDead);
         frontAnimalsCount++;
     }
 }

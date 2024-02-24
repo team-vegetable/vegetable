@@ -13,8 +13,8 @@ public class BattleSceneManager : MonoBehaviour
     // 戦闘に使用する野菜を格納する親オブジェクト
     [SerializeField] private Transform mainVegetablesParent = null;
 
-    // バトル開始時の残りの敵の数
-    [SerializeField] private int count = 5;
+    // 敵を倒した数
+    private int count = 0;
     // 戦闘に使用する野菜を格納する
     private List<GameObject> mainVegetables = new();
 
@@ -76,7 +76,7 @@ public class BattleSceneManager : MonoBehaviour
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            generateAnimals.Generate(spawnData.SpawnMapList[currentIndex++].Animal);
+            generateAnimals.Generate(spawnData.SpawnMapList[currentIndex++].Animal, OnAnimalDead);
         }
 
         //timer += Time.deltaTime;
@@ -87,5 +87,10 @@ public class BattleSceneManager : MonoBehaviour
         //        currentIndex++;
         //    }
         //}
+    }
+    
+    // 動物が倒されたとき
+    private void OnAnimalDead() {
+        battleUIHandler.SetCountText(++count);
     }
 }

@@ -11,7 +11,7 @@ public class BattleUIHandler : MonoBehaviour
     [SerializeField] private List<Image> icons = null;
     // 残り時間を表示するテキスト
     [SerializeField] private TextMeshProUGUI timeText = null;
-    // 残りの敵の数を表示するテキスト
+    // 倒した敵の数を表示するテキスト
     [SerializeField] private TextMeshProUGUI countText = null;
     // テスト用に負けた判定にする
     [SerializeField] private Button loseButton = null;
@@ -47,9 +47,9 @@ public class BattleUIHandler : MonoBehaviour
         }
     }
 
-    // 残りの敵の数をテキストに反映させる
+    // 倒した敵の数をテキストに反映させる
     public void SetCountText(int count) {
-        countText.text = $"残り{count}体";
+        countText.text = $"倒した敵 : {count}体";
     }
 
     // テスト用の敗北ボタンを押したとき
