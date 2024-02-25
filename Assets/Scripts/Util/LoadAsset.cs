@@ -18,7 +18,22 @@ public static class LoadAsset
         string[] guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}", new[] { folderPath });
         if (guids.Length <= 0) {
             Debug.LogError("パスの指定が間違っています");
-            return null;
+        }
+
+        List<T> list = new();
+        foreach (var guid in guids) {
+            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+            var asset = AssetDatabase.LoadAssetAtPath<T>(assetPath);
+            list.Add(asset);
+        }
+        return list;
+    }
+
+    // IDからプレハブの読み込み
+    public static List<T> LoadPrefab<T>(string folderPath) where T : BaseVegetable {
+        string[] guids = AssetDatabase.FindAssets("", new[] { folderPath });
+        if (guids.Length <= 0) {
+            Debug.LogError("パスの指定が間違っています");
         }
 
         List<T> list = new();

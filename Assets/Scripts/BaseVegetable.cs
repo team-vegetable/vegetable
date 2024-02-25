@@ -6,14 +6,16 @@ using UnityEngine;
 // 全ての野菜に継承させる基底クラス
 public class BaseVegetable : MonoBehaviour
 {
+    // 基礎情報をまとめたもの
+    [SerializeField] private Vegetable vegetable = null;
     // 遠距離攻撃の玉
     [SerializeField] private GameObject toamto = null;
 
     // SciprableObjectにこれから移動
     // 索敵範囲
-    [SerializeField] private float radius = 0.0f;
     // ダメージ
     [SerializeField] private int damage = 0;
+    [SerializeField] private float radius = 0.0f;
     // ミニトマトを発射するときのインターバル
     [SerializeField] private float interval = 0.0f;
 
@@ -21,6 +23,8 @@ public class BaseVegetable : MonoBehaviour
     private GameObject target = null;
     // ミニトマトを発射できるかどうか
     private bool canShoot = true;
+
+    public Vegetable Vegetable { get => vegetable; }
 
     private void Update() {
         var collider = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Animal"));
