@@ -12,6 +12,8 @@ public class BaseVegetable : MonoBehaviour
     // SciprableObjectにこれから移動
     // 索敵範囲
     [SerializeField] private float radius = 0.0f;
+    // ダメージ
+    [SerializeField] private int damage = 0;
     // ミニトマトを発射するときのインターバル
     [SerializeField] private float interval = 0.0f;
 
@@ -34,7 +36,7 @@ public class BaseVegetable : MonoBehaviour
     private IEnumerator OnShootCherryTomatoBUllet() {
         canShoot = false;
         var cherryTomatoBullet = Instantiate(toamto, transform.position, Quaternion.identity).GetComponent<CherryTomatoBullet>();
-        cherryTomatoBullet.Shoot(0, target.transform.position);
+        cherryTomatoBullet.Shoot(damage, target.transform.position);
         yield return new WaitForSeconds(interval);
         canShoot = true;
     }

@@ -1,10 +1,9 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 // 野菜を攻撃する敵に共通の基底クラス(継承する予定)
-public class Enemy : MonoBehaviour
+public class BaseAnimal : MonoBehaviour
 {
     // HPバー
     [SerializeField] private Image hpBar = null;
@@ -53,10 +52,6 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && state != State.Dying) {
-            UpdateCurrentHP();
-        }
-
         Vector2 currentPosition = transform.position;
         Vector2 direction = target - currentPosition;
         if (direction.magnitude <= animal.AttackRange && !isDying) {
@@ -74,9 +69,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // 現在のHPを更新する
-    private void UpdateCurrentHP() {
-        currentHP -= 100;
+    // ダメージを受けた時
+    public void TakeDamage(int damage) {
+        currentHP -= damage;
         if (currentHP <= 0) {
             state = State.Dying;
             onDead?.Invoke();

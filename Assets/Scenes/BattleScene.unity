@@ -2135,6 +2135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toamto: {fileID: 5545274698330087240, guid: 0a32df88f263c0347bb6939f21b6e29f, type: 3}
   radius: 10
+  damage: 100
   interval: 3
 --- !u!1 &2133655937
 GameObject:

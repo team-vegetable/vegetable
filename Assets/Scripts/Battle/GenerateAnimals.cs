@@ -31,7 +31,7 @@ public class GenerateAnimals : MonoBehaviour
     }
 
     public void Generate(Animal animalData, UnityAction onDead) {
-        var animal = Instantiate(animalData.Prefab, transform.position, Quaternion.identity, parent).GetComponent<Enemy>();
+        var animal = Instantiate(animalData.Prefab, transform.position, Quaternion.identity, parent).GetComponent<BaseAnimal>();
 
         // TODO : ‚Æ‚è‚ ‚¦‚¸lQ‚ğ‚ß‚ª‚¯‚ÄˆÚ“®‚µ‚Ä‚¢‚é‚Ì‚ÅŒã’ö•ÏX
         var targetPosition = new Vector2(vegetablePositions[0].position.x, vegetablePositions[0].position.y + frontAnimalsCount * offsetY);
