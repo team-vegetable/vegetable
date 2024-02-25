@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 // ミニトマト
@@ -14,16 +14,11 @@ public class CherryTomato : BaseVegetable
     [SerializeField] private GameObject toamto = null;
 
     // 攻撃
-    public override void Attack() {
-        StartCoroutine(OnShootCherryTomatoBUllet());
-    }
-
-    // ミニトマトを発射する遠距離攻撃
-    private IEnumerator OnShootCherryTomatoBUllet() {
+    public override async Task Attack() {
         canAttack = false;
         var cherryTomatoBullet = Instantiate(toamto, transform.position, Quaternion.identity).GetComponent<CherryTomatoBullet>();
         cherryTomatoBullet.Shoot(damage, target.transform.position);
-        yield return new WaitForSeconds(interval);
+        await Task.Delay(2000);
         canAttack = true;
     }
 }

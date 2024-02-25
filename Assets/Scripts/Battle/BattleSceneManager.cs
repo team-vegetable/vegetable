@@ -53,9 +53,7 @@ public class BattleSceneManager : MonoBehaviour {
             battleUIHandler.SetIcon(prefab.Vegetable.Icon, index);
         }
 
-        // 動物のアセットの読み込み
-        var animalAssets = LoadAsset.LoadFromFolder<Animal>(LoadAsset.ANIMAL_PATH);
-        generateAnimals.Init(animalAssets, transforms);
+        generateAnimals.Init(transforms);
     }
 
 
