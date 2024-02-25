@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 // ‘S‚Ä‚Ì–ìØ‚ÉŒp³‚³‚¹‚éŠî’êƒNƒ‰ƒX
@@ -15,18 +16,18 @@ public class BaseVegetable : MonoBehaviour
 
     public Vegetable Vegetable { get => vegetable; }
 
-    private void Update() {
+    private async void Update() {
         var collider = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Animal"));
         if (collider != null) {
             target = collider.gameObject;
             if (canAttack) {
-                Attack();
+                await Attack();
             }
         }
     }
 
-    public virtual void Attack() {
-
+    public virtual async Task Attack() {
+        await Task.CompletedTask;
     }
 
     private void OnDrawGizmos() {

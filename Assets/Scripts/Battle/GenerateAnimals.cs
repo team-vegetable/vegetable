@@ -16,15 +16,12 @@ public class GenerateAnimals : MonoBehaviour
 
     // 手前の野菜を攻撃している動物の数
     private int frontAnimalsCount = 0;
-    // 動物のアセットをリストで格納
-    private List<Animal> animalAssets = new();
 
     // 先に生成された動物ほど手前に表示する必要があるので、最大のOrderInLayerを指定
     private const int MAX_SORTING_ORDER = 100;
 
     // 初期化
-    public void Init(List<Animal> animalAssets, List<Transform> vegetablePositions) {
-        this.animalAssets = animalAssets;
+    public void Init(List<Transform> vegetablePositions) {
         this.vegetablePositions = vegetablePositions;
     }
 
