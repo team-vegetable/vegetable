@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 // 野菜を攻撃する敵に共通の基底クラス(継承する予定)
 public class BaseAnimal : MonoBehaviour
@@ -19,10 +20,10 @@ public class BaseAnimal : MonoBehaviour
     // 死亡時のイベント
     private UnityAction onDead = null;
 
-
-    private bool isDying = false;
     // 現在のHP
     private int currentHP = 0;
+    // 攻撃可能かどうか
+    protected bool canAttack = true;
 
     private enum State {
         // 狙う
@@ -46,7 +47,7 @@ public class BaseAnimal : MonoBehaviour
         currentHP = animal.MaxHP;
     }
 
-    private void Update() {
+    private async void Update() {
         // ターゲットが指定されていなければ移動しない
         if (target == Vector2.zero) {
             return;
@@ -54,13 +55,11 @@ public class BaseAnimal : MonoBehaviour
 
         Vector2 currentPosition = transform.position;
         Vector2 direction = target - currentPosition;
-        if (direction.magnitude <= animal.AttackRange && !isDying) {
-            isDying = true;
+        if (direction.magnitude <= animal.AttackRange && canAttack) {
             state = State.Attack;
-            return;
+            await Attack();
         }
 
-        // TODO : 移動についてベストのものを選択する
         if (state != State.Attack) {
             if (state == State.Dying) {
                 direction = initPosition - currentPosition;
@@ -71,6 +70,10 @@ public class BaseAnimal : MonoBehaviour
 
     // ダメージを受けた時
     public void TakeDamage(int damage) {
+        if (state == State.Dying) {
+            return;
+        }
+
         currentHP -= damage;
         if (currentHP <= 0) {
             state = State.Dying;
@@ -79,5 +82,10 @@ public class BaseAnimal : MonoBehaviour
         }
 
         hpBar.fillAmount = (float)currentHP / animal.MaxHP;
+    }
+
+    // 攻撃
+    public virtual async Task Attack() {
+        await Task.CompletedTask;
     }
 }

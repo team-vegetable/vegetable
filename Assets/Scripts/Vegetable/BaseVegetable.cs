@@ -26,6 +26,7 @@ public class BaseVegetable : MonoBehaviour
         }
     }
 
+    // UŒ‚
     public virtual async Task Attack() {
         await Task.CompletedTask;
     }
