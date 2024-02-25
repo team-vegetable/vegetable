@@ -24,6 +24,7 @@ public class BattleSceneManager : MonoBehaviour
     private float timer = 0.0f;
 
     private List<bool> isGenetate = new() { false, false};
+    private bool isGenerate = false;
 
     private void Start() {
         battleUIHandler.SetCountText(count);
@@ -79,12 +80,14 @@ public class BattleSceneManager : MonoBehaviour
             generateAnimals.Generate(spawnData.SpawnMapList[currentIndex++].Animal, OnAnimalDead);
         }
 
-        //timer += Time.deltaTime;
         //if (currentIndex < spawnData.SpawnMapList.Count && spawnData.SpawnMapList[currentIndex] != null) {
         //    if (spawnData.SpawnMapList[currentIndex].Interval >= timer) {
         //        timer = 0.0f;
-        //        generateAnimals.Generate(spawnData.SpawnMapList[currentIndex].Animal);
-        //        currentIndex++;
+        //        Debug.Log("Generate");
+        //        Debug.Log($"currentIndex : {currentIndex}");
+        //        generateAnimals.Generate(spawnData.SpawnMapList[currentIndex].Animal, OnAnimalDead);
+        //        currentIndex++;                
+        //        // currentIndex++;
         //    }
         //}
     }
