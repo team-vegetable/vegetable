@@ -40,7 +40,7 @@ public class BaseAnimal : MonoBehaviour
         this.target = target;
         this.onDead = onDead;
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = sortingOrder;
         initPosition = transform.position;
         currentHP = animal.MaxHP;
