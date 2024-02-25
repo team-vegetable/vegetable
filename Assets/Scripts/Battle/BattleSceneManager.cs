@@ -42,18 +42,20 @@ public class BattleSceneManager : MonoBehaviour {
             mainVegetableIDs = new() { (int)Vegetable.VEGETABLE.Carrot, (int)Vegetable.VEGETABLE.CherryTomato, (int)Vegetable.VEGETABLE.Cabbage };
         }
 #endif
+        List<Transform> transforms = new();
         // 野菜のプレハブをリストで取得
         var prefabs = LoadAsset.LoadPrefab<BaseVegetable>("Assets/Prefabs/Vegetable");
         for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {
             // セーブデータと一致する野菜を生成する
             var prefab = prefabs.FirstOrDefault(e => e.Vegetable.ID == mainVegetableIDs[index]);
-            Instantiate(prefab, VEGETABLE_POSITIONS[index], Quaternion.identity);
+            var vegetable = Instantiate(prefab, VEGETABLE_POSITIONS[index], Quaternion.identity);
+            transforms.Add(vegetable.transform);
             battleUIHandler.SetIcon(prefab.Vegetable.Icon, index);
         }
 
         // 動物のアセットの読み込み
         var animalAssets = LoadAsset.LoadFromFolder<Animal>(LoadAsset.ANIMAL_PATH);
-        generateAnimals.Init(animalAssets);
+        generateAnimals.Init(animalAssets, transforms);
     }
 
 

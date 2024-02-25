@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8211920097604815714}
   - component: {fileID: 6564749960949646764}
-  - component: {fileID: 262248774342911508}
+  - component: {fileID: -3148972607699466560}
   m_Layer: 0
   m_Name: CherryTomato
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &262248774342911508
+--- !u!114 &-3148972607699466560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,11 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1474731467627800287}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a54d56762a21a7b48b3c25ca3d2a5170, type: 3}
+  m_Script: {fileID: 11500000, guid: 08bb0ff8155ff344a9a9a1e7612a3f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   vegetable: {fileID: 11400000, guid: 0840892bcb9e11342ac41e3aca4b0afa, type: 2}
-  toamto: {fileID: 0}
-  damage: 0
-  radius: 0
-  interval: 0
+  radius: 10
+  damage: 100
+  interval: 5
+  toamto: {fileID: 5545274698330087240, guid: 0a32df88f263c0347bb6939f21b6e29f, type: 3}

@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine.Events;
 
 // バトル時の動物生成用のクラス
@@ -26,8 +23,9 @@ public class GenerateAnimals : MonoBehaviour
     private const int MAX_SORTING_ORDER = 100;
 
     // 初期化
-    public void Init(List<Animal> animalAssets) {
+    public void Init(List<Animal> animalAssets, List<Transform> vegetablePositions) {
         this.animalAssets = animalAssets;
+        this.vegetablePositions = vegetablePositions;
     }
 
     public void Generate(Animal animalData, UnityAction onDead) {
