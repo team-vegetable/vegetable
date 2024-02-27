@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UniRx;
+using Cysharp.Threading.Tasks;
+using System;
 
 // バトルの進行を管理する
 public class BattleSceneManager : MonoBehaviour {
@@ -25,7 +27,7 @@ public class BattleSceneManager : MonoBehaviour {
         new(-6.88f, -3.02f), new(-5.24f, -0.81f), new(-3.38f, 1.28f)
     };
 
-    private void Start() {
+    private async void Start() {
         battleUIHandler.SetCountText(count);
 
         // 敵の生成を管理するアセットの読み込み
@@ -54,24 +56,23 @@ public class BattleSceneManager : MonoBehaviour {
         }
 
         generateAnimals.Init(transforms);
+
+        await GenerateAnimal();
     }
 
+    // 動物の生成
+    private async UniTask GenerateAnimal() {
+        while (currentIndex < spawnData.SpawnMapList.Count) {
+            generateAnimals.Generate(spawnData.SpawnMapList[currentIndex].Animal, OnAnimalDead);
+            await UniTask.Delay(TimeSpan.FromSeconds(spawnData.SpawnMapList[currentIndex].Interval));
+            currentIndex++;
+        }
+    }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Return)) {
-            generateAnimals.Generate(spawnData.SpawnMapList[currentIndex++].Animal, OnAnimalDead);
+            // generateAnimals.Generate(spawnData.SpawnMapList[currentIndex++].Animal, OnAnimalDead);
         }
-
-        //if (currentIndex < spawnData.SpawnMapList.Count && spawnData.SpawnMapList[currentIndex] != null) {
-        //    if (spawnData.SpawnMapList[currentIndex].Interval >= timer) {
-        //        timer = 0.0f;
-        //        Debug.Log("Generate");
-        //        Debug.Log($"currentIndex : {currentIndex}");
-        //        generateAnimals.Generate(spawnData.SpawnMapList[currentIndex].Animal, OnAnimalDead);
-        //        currentIndex++;                
-        //        // currentIndex++;
-        //    }
-        //}
     }
     
     // 動物が倒されたとき
