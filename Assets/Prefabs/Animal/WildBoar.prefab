@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 698593453f5617d43a9965511d722eed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animal: {fileID: 11400000, guid: 7df662bf9f559b5429a62c4f711ace35, type: 2}
   hpBar: {fileID: 3824150662304460663}
 --- !u!1 &6514259637705781811
 GameObject:

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 // 野菜を攻撃する敵に共通の基底クラス(継承する予定)
 public class BaseAnimal : MonoBehaviour
 {
+    // 動物のステータスをまとめたもの
+    [SerializeField] private Animal animal = null;
     // HPバー
     [SerializeField] private Image hpBar = null;
 
-    // 動物のステータスをまとめたもの
-    private Animal animal = null;
     // スプライトレンダラー
     private SpriteRenderer spriteRenderer = null;
     // 初期座標
@@ -19,12 +19,12 @@ public class BaseAnimal : MonoBehaviour
     private Vector2 target = new();
     // 死亡時のイベント
     private UnityAction onDead = null;
-
     // 現在のHP
     private int currentHP = 0;
     // 攻撃可能かどうか
     protected bool canAttack = true;
 
+    // 現在のステート
     private enum State {
         // 狙う
         Target,
@@ -37,14 +37,14 @@ public class BaseAnimal : MonoBehaviour
 
     // 初期化
     public void Init(Animal animal, Vector2 target, int sortingOrder, UnityAction onDead) {
-        this.animal = animal;
+        // this.animal = animal;
         this.target = target;
         this.onDead = onDead;
 
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         spriteRenderer.sortingOrder = sortingOrder;
         initPosition = transform.position;
-        currentHP = animal.MaxHP;
+        currentHP = animal.BattleStatus.MaxHP;
     }
 
     private async void Update() {
@@ -55,7 +55,7 @@ public class BaseAnimal : MonoBehaviour
 
         Vector2 currentPosition = transform.position;
         Vector2 direction = target - currentPosition;
-        if (direction.magnitude <= animal.AttackRange && canAttack) {
+        if (direction.magnitude <= animal.BattleStatus.AttackRange && canAttack) {
             state = State.Attack;
             await Attack();
         }
@@ -64,7 +64,7 @@ public class BaseAnimal : MonoBehaviour
             if (state == State.Dying) {
                 direction = initPosition - currentPosition;
             }
-            transform.Translate(animal.Speed * Time.deltaTime * direction.normalized);
+            transform.Translate(animal.BattleStatus.Speed * Time.deltaTime * direction.normalized);
         }
     }
 
@@ -81,7 +81,7 @@ public class BaseAnimal : MonoBehaviour
             spriteRenderer.flipX = !spriteRenderer.flipX;
         }
 
-        hpBar.fillAmount = (float)currentHP / animal.MaxHP;
+        hpBar.fillAmount = (float)currentHP / animal.BattleStatus.MaxHP;
     }
 
     // 攻撃
