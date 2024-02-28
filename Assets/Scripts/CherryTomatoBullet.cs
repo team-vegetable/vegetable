@@ -24,10 +24,10 @@ public class CherryTomatoBullet : MonoBehaviour
 
     // ê⁄êGÇµÇΩéû
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Animal")) {
-            var animal = collision.gameObject.GetComponent<BaseAnimal>();
-            animal.TakeDamage(damage);
-            gameObject.SetActive(false);
-        }
+        //if (collision.gameObject.layer == LayerMask.NameToLayer("Animal")) {
+        //    var animal = collision.gameObject.GetComponent<BaseAnimal>();
+        //    animal.TakeDamage(damage);
+        //    gameObject.SetActive(false);
+        //}
     }
 }

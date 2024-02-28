@@ -12,9 +12,9 @@ public class Vegetable : ScriptableObject
     [SerializeField] private new string name = "";
     public string Name { get => name; }
 
-    [Header("バトルに使用する画像")]
-    [SerializeField] private Sprite battleSprite = null;
-    public Sprite BattleSprite { get => battleSprite; }
+    [Header("バトルに使用するステータス")]
+    [SerializeField] private VegetableBattleStatus battleStatus = null;
+    public VegetableBattleStatus BattleStatus { get => battleStatus; }
 
     [Header("アイコン")]
     [SerializeField] private Sprite icon = null;
@@ -30,6 +30,22 @@ public class Vegetable : ScriptableObject
         // キャベツ
         Cabbage
     }
+}
+
+// バトル用の野菜のステータス
+[System.Serializable]
+public class VegetableBattleStatus {
+    [Header("最大HP")]
+    [SerializeField] private int maxHP = 0;
+    public int MaxHP { get => maxHP; }
+
+    [Header("攻撃力")]
+    [SerializeField] private int attack = 0;
+    public int Attack { get => attack; }
+
+    [Header("攻撃範囲")]
+    [SerializeField] private int attackRange = 0;
+    public int AttackRange { get => attackRange; }
 }
 
 // 定数の管理

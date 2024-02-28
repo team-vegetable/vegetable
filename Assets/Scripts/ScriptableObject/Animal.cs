@@ -41,6 +41,10 @@ public class AnimalBattleStatus {
     [SerializeField] private int attack = 0;
     public int Attack { get => attack; }
 
+    [Header("UŒ‚‚ÆUŒ‚‚ÌƒCƒ“ƒ^[ƒoƒ‹")]
+    [SerializeField] private int interval = 0;
+    public int Interval { get => interval; }
+
     [Header("UŒ‚”ÍˆÍ")]
     [SerializeField] private int attackRange = 0;
     public int AttackRange { get => attackRange; }

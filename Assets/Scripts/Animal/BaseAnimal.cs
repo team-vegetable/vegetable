@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 // 野菜を攻撃する敵に共通の基底クラス(継承する予定)
 public class BaseAnimal : MonoBehaviour
 {
     // 動物のステータスをまとめたもの
-    [SerializeField] private Animal animal = null;
+    [SerializeField] protected Animal animal = null;
     // HPバー
     [SerializeField] private Image hpBar = null;
 
@@ -36,8 +37,7 @@ public class BaseAnimal : MonoBehaviour
     private State state = State.Target;
 
     // 初期化
-    public void Init(Animal animal, Vector2 target, int sortingOrder, UnityAction onDead) {
-        // this.animal = animal;
+    public void Init(Vector2 target, int sortingOrder, UnityAction onDead) {
         this.target = target;
         this.onDead = onDead;
 
@@ -85,7 +85,7 @@ public class BaseAnimal : MonoBehaviour
     }
 
     // 攻撃
-    public virtual async Task Attack() {
-        await Task.CompletedTask;
+    public virtual async UniTask Attack() {
+        await UniTask.CompletedTask;
     }
 }

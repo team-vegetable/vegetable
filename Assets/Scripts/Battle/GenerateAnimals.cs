@@ -30,7 +30,7 @@ public class GenerateAnimals : MonoBehaviour
 
         // TODO : ‚Æ‚è‚ ‚¦‚¸lQ‚ğ‚ß‚ª‚¯‚ÄˆÚ“®‚µ‚Ä‚¢‚é‚Ì‚ÅŒã’ö•ÏX
         var targetPosition = new Vector2(vegetablePositions[0].position.x, vegetablePositions[0].position.y + frontAnimalsCount * offsetY);
-        animal.Init(animalData, targetPosition, MAX_SORTING_ORDER - frontAnimalsCount, onDead);
+        animal.Init(targetPosition, MAX_SORTING_ORDER - frontAnimalsCount, onDead);
         frontAnimalsCount++;
     }
 }

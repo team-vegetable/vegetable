@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8211920097604815714}
   - component: {fileID: 6564749960949646764}
   - component: {fileID: -3148972607699466560}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CherryTomato
   m_TagString: Untagged
   m_Icon: {fileID: 0}

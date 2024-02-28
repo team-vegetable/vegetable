@@ -13,8 +13,14 @@ public class BaseVegetable : MonoBehaviour
     protected GameObject target = null;
     // 攻撃できるかどうか
     protected bool canAttack = true;
+    // 現在のHP
+    private int currentHP = 0;
 
     public Vegetable Vegetable { get => vegetable; }
+
+    private void Start() {
+        currentHP = Vegetable.BattleStatus.MaxHP;
+    }
 
     private async void Update() {
         var collider = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Animal"));
@@ -29,6 +35,12 @@ public class BaseVegetable : MonoBehaviour
     // 攻撃
     public virtual async Task Attack() {
         await Task.CompletedTask;
+    }
+
+    // ダメージを受けた時
+    public void TakeDamage(int damage) {
+        currentHP -= damage;
+        Debug.Log($"残りのHP : {currentHP}");
     }
 
     private void OnDrawGizmos() {

@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -15,10 +15,18 @@ public class WildBoar : BaseAnimal
     }
 
     // çUåÇ
-    public override async Task Attack() {
+    public override async UniTask Attack() {
         canAttack = false;
+        await UniTask.Delay(TimeSpan.FromSeconds(animal.BattleStatus.Interval)); ;
         animator.SetTrigger(attackKey);
-        await Task.Delay(2000);
         canAttack = true;
+    }
+
+    // ê⁄êGÇµÇΩéû
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Vegetable")) {
+            var vegetable = collision.gameObject.GetComponent<BaseVegetable>();
+            vegetable.TakeDamage(animal.BattleStatus.Attack);
+        }
     }
 }
