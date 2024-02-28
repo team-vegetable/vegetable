@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   name: "\u30A4\u30CE\u30B7\u30B7"
-  sprite: {fileID: 21300000, guid: a001a6e33feb987428996021e18c7dcb, type: 3}
   prefab: {fileID: 5616345169979406310, guid: f968ee088b619bb44ba8c425291bdd42, type: 3}
   battleStatus:
     maxHP: 300
     speed: 3
     attack: 3
+    interval: 3
     attackRange: 3

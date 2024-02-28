@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // ミニトマから発射された玉
@@ -24,10 +22,10 @@ public class CherryTomatoBullet : MonoBehaviour
 
     // 接触した時
     private void OnTriggerEnter2D(Collider2D collision) {
-        //if (collision.gameObject.layer == LayerMask.NameToLayer("Animal")) {
-        //    var animal = collision.gameObject.GetComponent<BaseAnimal>();
-        //    animal.TakeDamage(damage);
-        //    gameObject.SetActive(false);
-        //}
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Animal")) {
+            var animal = collision.transform.parent.gameObject.GetComponent<BaseAnimal>();
+            animal.TakeDamage(damage);
+            gameObject.SetActive(false);
+        }
     }
 }
