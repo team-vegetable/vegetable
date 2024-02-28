@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 // ミニトマト
@@ -14,11 +14,11 @@ public class CherryTomato : BaseVegetable
     [SerializeField] private GameObject toamto = null;
 
     // 攻撃
-    public override async Task Attack() {
+    public override async UniTask Attack() {
         canAttack = false;
         var cherryTomatoBullet = Instantiate(toamto, transform.position, Quaternion.identity).GetComponent<CherryTomatoBullet>();
         cherryTomatoBullet.Shoot(damage, target.transform.position);
-        await Task.Delay(2000);
+        await UniTask.Delay(TimeSpan.FromSeconds(2000));
         canAttack = true;
     }
 }

@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 // 全ての野菜に継承させる基底クラス
@@ -33,8 +33,8 @@ public class BaseVegetable : MonoBehaviour
     }
 
     // 攻撃
-    public virtual async Task Attack() {
-        await Task.CompletedTask;
+    public virtual async UniTask Attack() {
+        await UniTask.CompletedTask;
     }
 
     // ダメージを受けた時
@@ -43,6 +43,7 @@ public class BaseVegetable : MonoBehaviour
         Debug.Log($"残りのHP : {currentHP}");
     }
 
+    // 索敵範囲のギズモの表示
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, radius);
