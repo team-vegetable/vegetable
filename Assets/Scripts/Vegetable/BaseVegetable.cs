@@ -40,7 +40,7 @@ public class BaseVegetable : MonoBehaviour
     // ダメージを受けた時
     public void TakeDamage(int damage) {
         currentHP -= damage;
-        Debug.Log($"残りのHP : {currentHP}");
+        Debug.Log($"{gameObject.name}の残りのHP : {currentHP}");
     }
 
     // 索敵範囲のギズモの表示

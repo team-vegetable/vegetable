@@ -16,13 +16,12 @@ public class BattleSceneManager : MonoBehaviour {
 
     // “G‚ğ“|‚µ‚½”
     private int count = 0;
+    // “G‚Ì¶¬‚Ìƒf[ƒ^
     private EnemySpawnData spawnData = null;
+    // Œ»İ‰½”Ô–Ú‚Ì“G‚ğ¶¬‚µ‚Ä‚¢‚é‚©
     private int currentIndex = 0;
-    private float timer = 0.0f;
 
-    private List<bool> isGenetate = new() { false, false };
-    private bool isGenerate = false;
-
+    // –ìØ‚ÌÀ•W
     private readonly List<Vector2> VEGETABLE_POSITIONS = new() {
         new(-6.88f, -3.02f), new(-5.24f, -0.81f), new(-3.38f, 1.28f)
     };
@@ -66,12 +65,6 @@ public class BattleSceneManager : MonoBehaviour {
             generateAnimals.Generate(spawnData.SpawnMapList[currentIndex].Animal, OnAnimalDead);
             await UniTask.Delay(TimeSpan.FromSeconds(spawnData.SpawnMapList[currentIndex].Interval));
             currentIndex++;
-        }
-    }
-
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            // generateAnimals.Generate(spawnData.SpawnMapList[currentIndex++].Animal, OnAnimalDead);
         }
     }
     

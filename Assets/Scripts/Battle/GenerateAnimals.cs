@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 // バトル時の動物生成用のクラス
-public class GenerateAnimals : MonoBehaviour
-{
+public class GenerateAnimals : MonoBehaviour {
     // 生成する動物
     [SerializeField] private GameObject prefab = null;
     // 生成する敵の親オブジェクト
@@ -27,9 +26,8 @@ public class GenerateAnimals : MonoBehaviour
 
     public void Generate(Animal animalData, UnityAction onDead) {
         var animal = Instantiate(animalData.Prefab, transform.position, Quaternion.identity, parent).GetComponent<BaseAnimal>();
-
-        // TODO : とりあえず人参をめがけて移動しているので後程変更
-        var targetPosition = new Vector2(vegetablePositions[0].position.x, vegetablePositions[0].position.y + frontAnimalsCount * offsetY);
+        var index = Random.Range(0, vegetablePositions.Count);
+        var targetPosition = new Vector2(vegetablePositions[index].position.x, vegetablePositions[index].position.y + frontAnimalsCount * offsetY);
         animal.Init(targetPosition, MAX_SORTING_ORDER - frontAnimalsCount, onDead);
         frontAnimalsCount++;
     }
