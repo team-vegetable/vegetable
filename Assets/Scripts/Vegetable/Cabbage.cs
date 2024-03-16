@@ -30,8 +30,9 @@ public class Cabbage : BaseVegetable
     public void OnLand() {
         var colliders = Physics2D.OverlapCircleAll(transform.position, attackRadius, LayerMask.GetMask("Animal"));
         foreach (var item in colliders) {
-            var animal = item.transform.parent.GetComponent<BaseAnimal>();
-            animal.TakeDamage(10);
+            if (item.transform.parent.TryGetComponent<BaseAnimal>(out var animal)) {
+                animal.TakeDamage(0);
+            }
         }
     }
 

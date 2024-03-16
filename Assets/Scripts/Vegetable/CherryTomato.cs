@@ -18,7 +18,7 @@ public class CherryTomato : BaseVegetable
         canAttack = false;
         var cherryTomatoBullet = Instantiate(toamto, transform.position, Quaternion.identity).GetComponent<CherryTomatoBullet>();
         cherryTomatoBullet.Shoot(damage, target.transform.position);
-        await UniTask.Delay(TimeSpan.FromSeconds(2000));
+        await UniTask.Delay(TimeSpan.FromSeconds(2));
         canAttack = true;
     }
 }
