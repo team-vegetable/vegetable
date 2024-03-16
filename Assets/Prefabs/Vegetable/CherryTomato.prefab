@@ -99,6 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vegetable: {fileID: 11400000, guid: 0840892bcb9e11342ac41e3aca4b0afa, type: 2}
   radius: 10
-  damage: 1
+  damage: 100
   interval: 10
   toamto: {fileID: 5545274698330087240, guid: 0a32df88f263c0347bb6939f21b6e29f, type: 3}

@@ -1,14 +1,15 @@
 using Cysharp.Threading.Tasks;
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 
 // イノシシ
 public class WildBoar : BaseAnimal
 {
+    // アニメーター
     private Animator animator = null;
 
-    private int attackKey = Animator.StringToHash("Attack");
+    // アニメーターキー
+    private readonly int attackKey = Animator.StringToHash("Attack");
 
     private void Start() {
         animator = transform.GetChild(0).GetComponent<Animator>();
@@ -17,8 +18,8 @@ public class WildBoar : BaseAnimal
     // 攻撃
     public override async UniTask Attack() {
         canAttack = false;
-        await UniTask.Delay(TimeSpan.FromSeconds(animal.BattleStatus.Interval)); ;
         animator.SetTrigger(attackKey);
+        await UniTask.Delay(TimeSpan.FromSeconds(animal.BattleStatus.Interval));
         canAttack = true;
     }
 

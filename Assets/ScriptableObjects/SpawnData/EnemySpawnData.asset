@@ -16,5 +16,3 @@ MonoBehaviour:
   spawnMapList:
   - animal: {fileID: 11400000, guid: 7df662bf9f559b5429a62c4f711ace35, type: 2}
     interval: 2
-  - animal: {fileID: 11400000, guid: 7df662bf9f559b5429a62c4f711ace35, type: 2}
-    interval: 5

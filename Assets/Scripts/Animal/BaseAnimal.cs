@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 
 // –ìØ‚ğUŒ‚‚·‚é“G‚É‹¤’Ê‚ÌŠî’êƒNƒ‰ƒX(Œp³‚·‚é—\’è)
@@ -26,7 +25,7 @@ public class BaseAnimal : MonoBehaviour
     protected bool canAttack = true;
 
     // Œ»İ‚ÌƒXƒe[ƒg
-    private enum State {
+    protected enum State {
         // ‘_‚¤
         Target,
         // UŒ‚
@@ -34,7 +33,7 @@ public class BaseAnimal : MonoBehaviour
         // •m€
         Dying,
     }
-    private State state = State.Target;
+    protected State state = State.Target;
 
     // ‰Šú‰»
     public void Init(Vector2 target, int sortingOrder, UnityAction onDead) {
@@ -55,7 +54,8 @@ public class BaseAnimal : MonoBehaviour
 
         Vector2 currentPosition = transform.position;
         Vector2 direction = target - currentPosition;
-        if (direction.magnitude <= animal.BattleStatus.AttackRange && canAttack) {
+        if (direction.magnitude <= animal.BattleStatus.AttackRange && canAttack && state != State.Dying) {
+            Debug.Log("UŒ‚‚¾‚æ");
             state = State.Attack;
             await Attack();
         }
@@ -87,5 +87,10 @@ public class BaseAnimal : MonoBehaviour
     // UŒ‚
     public virtual async UniTask Attack() {
         await UniTask.CompletedTask;
+    }
+
+    // €–S‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    public bool IsDead() {
+        return state == State.Dying;
     }
 }

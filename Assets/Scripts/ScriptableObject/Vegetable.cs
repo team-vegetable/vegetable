@@ -20,7 +20,6 @@ public class Vegetable : ScriptableObject
     [SerializeField] private Sprite icon = null;
     public Sprite Icon { get => icon; }
 
-
     // –ìØ‚²‚Æ‚ÌID
     public enum VEGETABLE {
         // lQ

@@ -23,12 +23,17 @@ public class BaseVegetable : MonoBehaviour
     }
 
     private async void Update() {
-        var collider = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Animal"));
-        if (collider != null) {
-            target = collider.gameObject;
-            if (canAttack) {
-                await Attack();
+        // 対象が無ければ取得する
+        if (target == null) {
+            var collider = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Animal"));
+            if (collider != null) {
+                target = collider.gameObject;
             }
+        }
+
+        // 対象がいて攻撃可能なら攻撃する
+        if (canAttack && target != null) {
+            await Attack();
         }
     }
 
@@ -40,7 +45,7 @@ public class BaseVegetable : MonoBehaviour
     // ダメージを受けた時
     public void TakeDamage(int damage) {
         currentHP -= damage;
-        Debug.Log($"{gameObject.name}の残りのHP : {currentHP}");
+        // Debug.Log($"{gameObject.name}の残りのHP : {currentHP}");
     }
 
     // 索敵範囲のギズモの表示
