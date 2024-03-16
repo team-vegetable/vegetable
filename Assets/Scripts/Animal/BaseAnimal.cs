@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 
 // –ìØ‚ğUŒ‚‚·‚é“G‚É‹¤’Ê‚ÌŠî’êƒNƒ‰ƒX(Œp³‚·‚é—\’è)
@@ -26,7 +25,7 @@ public class BaseAnimal : MonoBehaviour
     protected bool canAttack = true;
 
     // Œ»İ‚ÌƒXƒe[ƒg
-     protected enum State {
+    protected enum State {
         // ‘_‚¤
         Target,
         // UŒ‚
@@ -88,5 +87,10 @@ public class BaseAnimal : MonoBehaviour
     // UŒ‚
     public virtual async UniTask Attack() {
         await UniTask.CompletedTask;
+    }
+
+    // €–S‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    public bool IsDead() {
+        return state == State.Dying;
     }
 }
