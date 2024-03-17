@@ -8,7 +8,7 @@ using System;
 // バトルの進行を管理する
 public class BattleSceneManager : MonoBehaviour {
     // バトルに必要なUI周り
-    [SerializeField] private BattleUIHandler battleUIHandler = null;
+    [SerializeField] private BattleMainViewer battleUIHandler = null;
     // 動物生成用
     [SerializeField] private GenerateAnimals generateAnimals = null;
     // 戦闘に使用する野菜を格納する親オブジェクト
