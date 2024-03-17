@@ -1,5 +1,7 @@
 using Cysharp.Threading.Tasks;
+using UniRx;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 // 全ての野菜に継承させる基底クラス
 public class BaseVegetable : MonoBehaviour
@@ -10,7 +12,7 @@ public class BaseVegetable : MonoBehaviour
     [SerializeField] private float radius = 0.0f;
 
     // 対象の動物(とりあえず一体だけ)
-    protected GameObject target = null;
+    protected BaseAnimal targetAnimal = null;
     // 攻撃できるかどうか
     protected bool canAttack = true;
     // 現在のHP
@@ -18,21 +20,25 @@ public class BaseVegetable : MonoBehaviour
 
     public Vegetable Vegetable { get => vegetable; }
 
-    private void Start() {
+    private async void Start() {
         currentHP = Vegetable.BattleStatus.MaxHP;
+
+        await GetTargetAnimal();
     }
 
     private async void Update() {
         // 対象が無ければ取得する
-        if (target == null) {
-            var collider = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Animal"));
-            if (collider != null) {
-                target = collider.gameObject;
-            }
-        }
+        //if (targetAnimal == null) {
+        //    var collider = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Animal"));
+        //    if (collider != null) {
+        //        if (collider.gameObject.transform.parent.TryGetComponent<BaseAnimal>(out targetAnimal)) {
+        //            targetAnimal.OnEnemyDead.Subscribe(_ => UpdateTarget()).AddTo(this);
+        //        }
+        //    }
+        //}
 
         // 対象がいて攻撃可能なら攻撃する
-        if (canAttack && target != null) {
+        if (canAttack && targetAnimal != null) {
             await Attack();
         }
     }
@@ -46,6 +52,37 @@ public class BaseVegetable : MonoBehaviour
     public void TakeDamage(int damage) {
         currentHP -= damage;
         // Debug.Log($"{gameObject.name}の残りのHP : {currentHP}");
+    }
+
+    // 対象の敵のHPが0になったら新しい対象の敵をセットする
+    private async void UpdateTarget() {
+        // 現在の対象をnullにする
+        targetAnimal = null;
+        await GetTargetAnimal();
+    }
+
+    // 対象の動物を取得する(1体だけ)
+    private async UniTask GetTargetAnimal() {
+        BaseAnimal animal = null;
+
+        while (targetAnimal == null) {
+            await UniTask.Yield();
+            var collider2D = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Animal"));
+            if (collider2D != null) {                
+                if (animal == null) {
+                    animal = collider2D.transform.parent.GetComponent<BaseAnimal>();
+                }
+                
+                // 取得した動物のHPがまだあれば対象としてセットする
+                if (animal != null) {
+                    if (!animal.IsDead()) {
+                        targetAnimal = animal;
+                    }
+                }
+            }
+        }
+
+        targetAnimal.OnEnemyDead.Subscribe(_ => UpdateTarget()).AddTo(this);
     }
 
     // 索敵範囲のギズモの表示

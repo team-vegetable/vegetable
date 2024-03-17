@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using UniRx;
+using System;
 
 // 野菜を攻撃する敵に共通の基底クラス(継承する予定)
 public class BaseAnimal : MonoBehaviour
@@ -23,6 +25,9 @@ public class BaseAnimal : MonoBehaviour
     private int currentHP = 0;
     // 攻撃可能かどうか
     protected bool canAttack = true;
+
+    private readonly Subject<Unit> onEnemyDead = new();
+    public IObservable<Unit> OnEnemyDead => onEnemyDead;
 
     // 現在のステート
     protected enum State {
@@ -55,7 +60,6 @@ public class BaseAnimal : MonoBehaviour
         Vector2 currentPosition = transform.position;
         Vector2 direction = target - currentPosition;
         if (direction.magnitude <= animal.BattleStatus.AttackRange && canAttack && state != State.Dying) {
-            Debug.Log("攻撃だよ");
             state = State.Attack;
             await Attack();
         }
@@ -79,6 +83,9 @@ public class BaseAnimal : MonoBehaviour
             state = State.Dying;
             onDead?.Invoke();
             spriteRenderer.flipX = !spriteRenderer.flipX;
+
+            // 死んだときのイベントの発行
+            onEnemyDead.OnNext(Unit.Default);
         }
 
         hpBar.fillAmount = (float)currentHP / animal.BattleStatus.MaxHP;

@@ -17,7 +17,7 @@ public class CherryTomato : BaseVegetable
     public override async UniTask Attack() {
         canAttack = false;
         var cherryTomatoBullet = Instantiate(toamto, transform.position, Quaternion.identity).GetComponent<CherryTomatoBullet>();
-        cherryTomatoBullet.Shoot(damage, target.transform.position);
+        cherryTomatoBullet.Shoot(damage, targetAnimal.transform.position);
         await UniTask.Delay(TimeSpan.FromSeconds(2));
         canAttack = true;
     }
