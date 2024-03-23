@@ -12,6 +12,7 @@ public class BattlePresenter : MonoBehaviour
     private void Start() {
         mainView.Init();
 
+        model.Vegetables.Subscribe(vegetables => mainView.SetIcon(vegetables)).AddTo(this);
         model.Count.Subscribe(count => mainView.SetCountText(count)).AddTo(this);
         model.Timer.Subscribe(timer => mainView.SetTimerText(timer)).AddTo(this);
     }

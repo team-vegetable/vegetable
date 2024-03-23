@@ -7,10 +7,7 @@ using System;
 
 // バトルの進行を管理する
 public class BattleSceneManager : MonoBehaviour {
-    // バトルに必要なUI周り
-    // TODO 廃止予定
-    [SerializeField] private BattleMainViewer battleUIHandler = null;
-
+    // MVPのモデル
     [SerializeField] private BattleModel model = null;
     // 動物生成用
     [SerializeField] private GenerateAnimals generateAnimals = null;
@@ -36,7 +33,6 @@ public class BattleSceneManager : MonoBehaviour {
         spawnData = LoadAsset.LoadFromFolder<EnemySpawnData>(LoadAsset.SPAWN_DATA_PATH).FirstOrDefault(e => e.StageID == 1);
 
         // 野菜のアセットと編成状態の読み込み
-        // var vegetableAssets = LoadAsset.LoadFromFolder<Vegetable>(LoadAsset.VEGETABLE_PATH);
         var mainVegetableIDs = QuickSave.Load<List<int>>(VegetableConstData.PARTY_DATA, "MainVegetableIDs");
 
 #if UNITY_EDITOR
@@ -45,19 +41,26 @@ public class BattleSceneManager : MonoBehaviour {
             mainVegetableIDs = new() { (int)Vegetable.VEGETABLE.Carrot, (int)Vegetable.VEGETABLE.CherryTomato, (int)Vegetable.VEGETABLE.Cabbage };
         }
 #endif
-        List<Transform> transforms = new();
+        List<Transform> vegetablePositions = new();
+        List<Vegetable> vegetables = new();
+
         // 野菜のプレハブをリストで取得
         var prefabs = LoadAsset.LoadPrefab<BaseVegetable>("Assets/Prefabs/Vegetable");
         for (int index = 0; index < VegetableConstData.MAIN_VEGETABLES_COUNT; index++) {
             // セーブデータと一致する野菜を生成する
             var prefab = prefabs.FirstOrDefault(e => e.Vegetable.ID == mainVegetableIDs[index]);
             var vegetable = Instantiate(prefab, VEGETABLE_POSITIONS[index], Quaternion.identity);
-            transforms.Add(vegetable.transform);
-            battleUIHandler.SetIcon(prefab.Vegetable.Icon, index);
+            vegetables.Add(prefab.Vegetable);
+            vegetablePositions.Add(vegetable.transform);
         }
 
-        generateAnimals.Init(transforms);
+        model.SetVegetableIcon(vegetables);
+        generateAnimals.Init(vegetablePositions);
 
+        // タイマーのスタート
+        await model.StartTimer();
+
+        // 動物の生成
         await GenerateAnimal();
     }
 
@@ -72,6 +75,6 @@ public class BattleSceneManager : MonoBehaviour {
     
     // 動物が倒されたとき
     private void OnAnimalDead() {
-        model.Test();
+        model.UpdateAnimalCount();
     }
 }

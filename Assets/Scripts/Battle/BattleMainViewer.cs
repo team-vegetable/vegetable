@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
 
 // バトルの表示関係を扱う
@@ -31,6 +32,13 @@ public class BattleMainViewer : MonoBehaviour
     // 野菜のアイコンのセット
     public void SetIcon(Sprite sprite, int index) {
         icons[index].sprite = sprite;
+    }
+
+    // 野菜のアイコンのセット
+    public void SetIcon(List<Vegetable> vegetables) {
+        for (int index = 0; index < icons.Count; index++) {
+            icons[index].sprite = vegetables[index].Icon;
+        }
     }
 
     // 倒した敵の数をテキストに反映させる
