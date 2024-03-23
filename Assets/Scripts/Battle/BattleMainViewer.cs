@@ -17,17 +17,15 @@ public class BattleMainViewer : MonoBehaviour
 
     // 敗北時のUI
     [SerializeField] private LoseUI loseUI = null;
-     
-    // 残り何秒から開始するか
-    [SerializeField] private float timer = 60.0f;
+
+    // 初期化
+    public void Init() {
+        SetCountText(0);
+    }
 
     // 残り時間のタイマーをスタートさせる
-    public async UniTask StartTimer() {
-        while (true) {
-            await UniTask.Yield();
-            timer -= Time.deltaTime;
-            timeText.text = $"残り{(int)timer}秒";
-        }
+    public void SetTimerText(float timer) {
+        timeText.text = $"残り{(int)timer}秒";
     }
 
     // 野菜のアイコンのセット

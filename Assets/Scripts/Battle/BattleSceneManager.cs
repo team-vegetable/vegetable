@@ -8,7 +8,10 @@ using System;
 // バトルの進行を管理する
 public class BattleSceneManager : MonoBehaviour {
     // バトルに必要なUI周り
+    // TODO 廃止予定
     [SerializeField] private BattleMainViewer battleUIHandler = null;
+
+    [SerializeField] private BattleModel model = null;
     // 動物生成用
     [SerializeField] private GenerateAnimals generateAnimals = null;
     // 戦闘に使用する野菜を格納する親オブジェクト
@@ -27,7 +30,6 @@ public class BattleSceneManager : MonoBehaviour {
     };
 
     private async void Start() {
-        battleUIHandler.SetCountText(count);
 
         // 敵の生成を管理するアセットの読み込み
         // 現在はステージ１決め打ち
@@ -70,6 +72,6 @@ public class BattleSceneManager : MonoBehaviour {
     
     // 動物が倒されたとき
     private void OnAnimalDead() {
-        battleUIHandler.SetCountText(++count);
+        model.Test();
     }
 }

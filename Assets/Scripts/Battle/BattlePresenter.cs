@@ -9,9 +9,10 @@ public class BattlePresenter : MonoBehaviour
     // メインで使用するビュー
     [SerializeField] private BattleMainViewer mainView = null;
 
-    private async void Start() {
-        model.Count.Subscribe(count => mainView.SetCountText(count)).AddTo(this);
+    private void Start() {
+        mainView.Init();
 
-        await mainView.StartTimer();
+        model.Count.Subscribe(count => mainView.SetCountText(count)).AddTo(this);
+        model.Timer.Subscribe(timer => mainView.SetTimerText(timer)).AddTo(this);
     }
 }

@@ -23,20 +23,11 @@ public class BaseVegetable : MonoBehaviour
     private async void Start() {
         currentHP = Vegetable.BattleStatus.MaxHP;
 
+        // ‘ÎÛ‚Ì“G‚ğæ“¾‚·‚é
         await GetTargetAnimal();
     }
 
     private async void Update() {
-        // ‘ÎÛ‚ª–³‚¯‚ê‚Îæ“¾‚·‚é
-        //if (targetAnimal == null) {
-        //    var collider = Physics2D.OverlapCircle(transform.position, radius, LayerMask.GetMask("Animal"));
-        //    if (collider != null) {
-        //        if (collider.gameObject.transform.parent.TryGetComponent<BaseAnimal>(out targetAnimal)) {
-        //            targetAnimal.OnEnemyDead.Subscribe(_ => UpdateTarget()).AddTo(this);
-        //        }
-        //    }
-        //}
-
         // ‘ÎÛ‚ª‚¢‚ÄUŒ‚‰Â”\‚È‚çUŒ‚‚·‚é
         if (canAttack && targetAnimal != null) {
             await Attack();

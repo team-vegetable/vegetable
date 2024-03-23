@@ -1967,6 +1967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   battleUIHandler: {fileID: 2032538500}
+  model: {fileID: 521673310}
   generateAnimals: {fileID: 728485373}
   mainVegetablesParent: {fileID: 594621010}
 --- !u!1 &1892566429
@@ -2304,7 +2305,6 @@ MonoBehaviour:
   timeText: {fileID: 1892566431}
   countText: {fileID: 857277002}
   loseUI: {fileID: 846702214}
-  timer: 60
 --- !u!1 &2133655937
 GameObject:
   m_ObjectHideFlags: 0
