@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 // ‘S‚Ä‚Ì–ìØ‚ÉŒp³‚³‚¹‚éŠî’êƒNƒ‰ƒX
 public class BaseVegetable : MonoBehaviour

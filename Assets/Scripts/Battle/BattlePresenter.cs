@@ -2,8 +2,7 @@ using UnityEngine;
 using UniRx;
 
 // バトルのモデルビューをつなぐプレゼンター
-public class BattlePresenter : MonoBehaviour
-{
+public class BattlePresenter : MonoBehaviour {
     // モデル
     [SerializeField] private BattleModel model = null;
     // メインで使用するビュー

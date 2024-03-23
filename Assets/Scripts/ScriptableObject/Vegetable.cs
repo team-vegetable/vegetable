@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // 野菜のパラメーター関連
@@ -51,6 +52,12 @@ public class VegetableBattleStatus {
 public static class VegetableConstData {
     // 戦闘に使用する野菜の数
     public static readonly int MAIN_VEGETABLES_COUNT = 3;
+
+    // 戦闘の制限時間
+    public static readonly int TIMER = 60;
+
+    // デフォルトの野菜の編成
+    public readonly static List<int> DefaultVegetableIds = new() { (int)Vegetable.VEGETABLE.Carrot, (int)Vegetable.VEGETABLE.CherryTomato, (int)Vegetable.VEGETABLE.Cabbage };
 
     // セーブデータのパス
     // 編成状態

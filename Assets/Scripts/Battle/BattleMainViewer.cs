@@ -7,8 +7,7 @@ using UnityEngine.U2D;
 using UnityEngine.UI;
 
 // バトルの表示関係を扱う
-public class BattleMainViewer : MonoBehaviour
-{
+public class BattleMainViewer : MonoBehaviour {
     // 野菜のアイコン
     [SerializeField] private List<Image> icons = null;
     // 残り時間を表示するテキスト

@@ -14,8 +14,6 @@ public class BattleSceneManager : MonoBehaviour {
     // 戦闘に使用する野菜を格納する親オブジェクト
     [SerializeField] private Transform mainVegetablesParent = null;
 
-    // 敵を倒した数
-    private int count = 0;
     // 敵の生成のデータ
     private EnemySpawnData spawnData = null;
     // 現在何番目の敵を生成しているか
@@ -27,20 +25,13 @@ public class BattleSceneManager : MonoBehaviour {
     };
 
     private async void Start() {
-
         // 敵の生成を管理するアセットの読み込み
         // 現在はステージ１決め打ち
         spawnData = LoadAsset.LoadFromFolder<EnemySpawnData>(LoadAsset.SPAWN_DATA_PATH).FirstOrDefault(e => e.StageID == 1);
 
         // 野菜のアセットと編成状態の読み込み
-        var mainVegetableIDs = QuickSave.Load<List<int>>(VegetableConstData.PARTY_DATA, "MainVegetableIDs");
+        var mainVegetableIDs = QuickSave.Load(VegetableConstData.PARTY_DATA, "MainVegetableIDs", VegetableConstData.DefaultVegetableIds);
 
-#if UNITY_EDITOR
-        // セーブデータを作ってなければ初期の野菜をセットする
-        if (mainVegetableIDs == default) {
-            mainVegetableIDs = new() { (int)Vegetable.VEGETABLE.Carrot, (int)Vegetable.VEGETABLE.CherryTomato, (int)Vegetable.VEGETABLE.Cabbage };
-        }
-#endif
         List<Transform> vegetablePositions = new();
         List<Vegetable> vegetables = new();
 
@@ -56,9 +47,6 @@ public class BattleSceneManager : MonoBehaviour {
 
         model.SetVegetableIcon(vegetables);
         generateAnimals.Init(vegetablePositions);
-
-        // タイマーのスタート
-        await model.StartTimer();
 
         // 動物の生成
         await GenerateAnimal();
