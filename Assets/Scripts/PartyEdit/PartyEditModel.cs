@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 // パーティ編成画面のモデル
 public class PartyEditModel : MonoBehaviour {
@@ -38,6 +37,16 @@ public class PartyEditModel : MonoBehaviour {
                 icon.GetComponent<RectTransform>().anchoredPosition = VEGETABLE_POSITIONS[index];
                 icon.Init(asset, SwitchIcon);
             }
+
+            for (int index = 0; index < 10; index++) {
+                var asset = vegtableAssets.FirstOrDefault(e => e.ID == 1);
+                if (asset == null) {
+                    continue;
+                }
+                var icon = Instantiate(vegetableIcon, reserveVegetablesParent);
+                // icon.GetComponent<RectTransform>().anchoredPosition = VEGETABLE_POSITIONS[index];
+                icon.Init(asset, SwitchIcon);
+            }
         }
 
         // メインの野菜オブジェクトを取得
@@ -52,8 +61,8 @@ public class PartyEditModel : MonoBehaviour {
 
     // アイコンの入れ替え
     private void SwitchIcon(UnitIcon moveIcon, UnitIcon hitIcon) {
-        // サブ同士の入れ替えは受け付けない(上手く動かない)
-        if (reserveVegetableObjects.Any(e => e == moveIcon) && reserveVegetableObjects.Any(e => e == hitIcon)) {
+        // サブ同士の野菜の入れ替えは受け付けない
+        if (IsSwitchingSub(moveIcon.gameObject, hitIcon.gameObject)) {
             return;
         }
 
@@ -61,33 +70,34 @@ public class PartyEditModel : MonoBehaviour {
         var hitSiblingIndex = hitIcon.transform.GetSiblingIndex();
 
         // メイン同士の入れ替え
-        if (mainVegetableObjects.Any(e => e == moveIcon.gameObject) && mainVegetableObjects.Any(e => e == hitIcon.gameObject)) {
+        if (IsSwitchingMain(moveIcon.gameObject, hitIcon.gameObject)) {
+            // 座標の入れ替え
             var moveBeforeDragPosition = moveIcon.BeforeDragPosition;
             var hitBeforeDragPosition = hitIcon.BeforeDragPosition;
-
             moveIcon.transform.position = hitIcon.BeforeDragPosition;
             hitIcon.transform.position = moveIcon.BeforeDragPosition;
 
+            // 座標の更新
             moveIcon.UpdateBeforeDragPosition(hitBeforeDragPosition);
             hitIcon.UpdateBeforeDragPosition(moveBeforeDragPosition);
         }
+        // メインとサブの入れ替え
         else {
-            // メインとサブの入れ替えは一旦コメントアウト
             //moveIcon.transform.SetParent(null);
             //hitIcon.transform.SetParent(null);
 
-            //// メインからサブに入れ替えた場合
-            //if (IsSwitchingMainToSub(moveIcon, hitIcon)) {
-            //    moveIcon.transform.SetParent(reserveVegetablesParent);
-            //    hitIcon.transform.SetParent(mainVegetablesParent);
-            //    (reserveVegetableObjects[hitSiblingIndex], mainVegetableObjects[moveSiblingIndex]) = (mainVegetableObjects[moveSiblingIndex], reserveVegetableObjects[hitSiblingIndex]);
-            //}
-            //// サブからメインに入れ替えた場合
-            //else {
-            //    moveIcon.transform.SetParent(mainVegetablesParent);
-            //    hitIcon.transform.SetParent(reserveVegetablesParent);
-            //    (reserveVegetableObjects[moveSiblingIndex], mainVegetableObjects[hitSiblingIndex]) = (mainVegetableObjects[hitSiblingIndex], reserveVegetableObjects[moveSiblingIndex]);
-            //}
+            // メインからサブに入れ替えた場合
+            if (IsSwitchingMainToSub(moveIcon.gameObject, hitIcon.gameObject)) {
+                moveIcon.transform.SetParent(reserveVegetablesParent);
+                hitIcon.transform.SetParent(mainVegetablesParent);
+                hitIcon.transform.position = moveIcon.BeforeDragPosition;
+            }
+            // サブからメインに入れ替えた場合
+            else {
+                moveIcon.transform.SetParent(mainVegetablesParent);
+                hitIcon.transform.SetParent(reserveVegetablesParent);
+                moveIcon.transform.position = hitIcon.BeforeDragPosition;
+            }
 
             //moveIcon.transform.SetSiblingIndex(hitSiblingIndex);
             //hitIcon.transform.SetSiblingIndex(moveSiblingIndex);
@@ -107,11 +117,18 @@ public class PartyEditModel : MonoBehaviour {
         QuickSave.Save(VegetableConstData.PARTY_DATA, "MainVegetableIDs", mainVegetableIDs);
     }
 
+    // サブ同士の野菜が入れ替わったかどうか
+    private bool IsSwitchingSub(GameObject moveIcon, GameObject hitIcon) {
+        return reserveVegetableObjects.Any(e => e == moveIcon) && reserveVegetableObjects.Any(e => e == hitIcon);
+    }
+
+    // メイン同士の野菜が入れ替わったかどうか
+    private bool IsSwitchingMain(GameObject moveIcon, GameObject hitIcon) {
+        return mainVegetableObjects.Any(e => e == moveIcon) && mainVegetableObjects.Any(e => e == hitIcon);
+    }
+
     // メインからサブに入れ替えたかどうか
     private bool IsSwitchingMainToSub(GameObject moveIcon, GameObject hitIcon) {
-        if (mainVegetableObjects.Any(e => e == moveIcon) && reserveVegetableObjects.Any(e => e == hitIcon)) {
-            return true;
-        }
-        return false;
+        return mainVegetableObjects.Any(e => e == moveIcon) && reserveVegetableObjects.Any(e => e == hitIcon);
     }
 }

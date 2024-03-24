@@ -14,4 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   name: 
-  sprite: {fileID: 21300000, guid: 2b120fa633c29e240b8dae7543a96eb0, type: 3}
+  battleStatus:
+    maxHP: 0
+    attack: 0
+    attackRange: 0
+  icon: {fileID: 21300000, guid: 2b120fa633c29e240b8dae7543a96eb0, type: 3}
+  battleSprite: {fileID: 21300000, guid: 2b120fa633c29e240b8dae7543a96eb0, type: 3}

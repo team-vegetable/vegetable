@@ -71,4 +71,9 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void UpdateBeforeDragPosition(Vector3 position) {
         BeforeDragPosition = new Vector3(position.x, position.y, 0.0f);
     }
+
+    // –ìØ‚Ì‰æ‘œ‚ÌXV
+    public void UpdateImage(Sprite sprite) {
+        image.sprite = sprite;
+    }
 }
