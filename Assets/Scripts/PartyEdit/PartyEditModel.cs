@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 // パーティ編成画面のモデル
 public class PartyEditModel : MonoBehaviour {
@@ -10,6 +12,8 @@ public class PartyEditModel : MonoBehaviour {
     [SerializeField] private Transform mainVegetablesParent = null;
     // サブの野菜を格納する親オブジェクト
     [SerializeField] private Transform reserveVegetablesParent = null;
+    // スクロール
+    [SerializeField] private ScrollRect scrollRect = null;
 
     // 戦闘で使用するオブジェクトのリスト
     private readonly List<GameObject> mainVegetableObjects = new();
@@ -35,17 +39,17 @@ public class PartyEditModel : MonoBehaviour {
                 }
                 var icon = Instantiate(vegetableIcon, mainVegetablesParent);
                 icon.GetComponent<RectTransform>().anchoredPosition = VEGETABLE_POSITIONS[index];
-                icon.Init(asset, SwitchIcon);
+                icon.Init(asset, scrollRect, SwitchIcon);
             }
 
-            for (int index = 0; index < 10; index++) {
+            for (int index = 0; index < 20; index++) {
                 var asset = vegtableAssets.FirstOrDefault(e => e.ID == 1);
                 if (asset == null) {
                     continue;
                 }
                 var icon = Instantiate(vegetableIcon, reserveVegetablesParent);
                 // icon.GetComponent<RectTransform>().anchoredPosition = VEGETABLE_POSITIONS[index];
-                icon.Init(asset, SwitchIcon);
+                icon.Init(asset, scrollRect, SwitchIcon);
             }
         }
 

@@ -295,8 +295,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 451649985}
   m_HandleRect: {fileID: 451649984}
   m_Direction: 0
-  m_Value: -0.000001909337
-  m_Size: 0.91179514
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1149,6 +1149,7 @@ MonoBehaviour:
   vegetableIcon: {fileID: 3266691091236551306, guid: 859eddb3f23efe9448e5be69045be9c2, type: 3}
   mainVegetablesParent: {fileID: 1394819778}
   reserveVegetablesParent: {fileID: 1181676015}
+  scrollRect: {fileID: 1049015804}
 --- !u!1 &1040441195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1327,7 +1328,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -991.49963, y: 0}
+  m_AnchoredPosition: {x: -991.50006, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1181676016
@@ -1750,7 +1751,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 240873344}
   m_HandleRect: {fileID: 240873343}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

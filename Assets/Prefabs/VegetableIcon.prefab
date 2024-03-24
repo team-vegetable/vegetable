@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3401108850891643894}
   - component: {fileID: 2201622061267490765}
   - component: {fileID: 3266691091236551306}
+  - component: {fileID: 9040713997116836908}
   m_Layer: 0
   m_Name: VegetableIcon
   m_TagString: Untagged
@@ -130,4 +131,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2b57cb04a3a384e9cad6831c6649a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vegetable: {fileID: 11400000, guid: 827d7c431d6d7db478535a6b0387af63, type: 2}
+--- !u!114 &9040713997116836908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6340539486651584188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48e93426b16d5454c89e8d47ccded1c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
