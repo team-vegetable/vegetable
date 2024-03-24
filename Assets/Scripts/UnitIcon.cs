@@ -11,15 +11,15 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private Image image = null;
     // キャンバス
     private Canvas canvas = null;
-    // ドラッグ開始したときの座標
-    private Vector3 initPosition = new();
     // アイコンを入れ替えたときのイベント
-    private UnityAction<GameObject, GameObject> onSwitch = null;
+    private UnityAction<UnitIcon, UnitIcon> onSwitch = null;
 
     // 野菜のデータ
     public Vegetable Vegetable { get; private set; }
+    // ドラッグする前の座標
+    public Vector3 BeforeDragPosition { get; private set; }
 
-    public void Init(Vegetable vegetable, UnityAction<GameObject, GameObject> callback) {
+    public void Init(Vegetable vegetable, UnityAction<UnitIcon, UnitIcon> callback) {
         Vegetable = vegetable;
         onSwitch = callback;
 
@@ -27,11 +27,11 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         canvas = GetComponent<Canvas>();
 
         image.sprite = Vegetable.BattleSprite;
+        BeforeDragPosition = new Vector3(transform.position.x, transform.position.y, 0.0f);
     }
 
     // ドラッグ開始
     public void OnBeginDrag(PointerEventData eventData) {
-        initPosition = transform.position;
         canvas.sortingOrder = 1;
     }
 
@@ -49,7 +49,7 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         // 正しく入れ替えることができなかった時は初期座標に戻す
         if (raycastResults.Count == 1 && raycastResults[0].gameObject == gameObject) {
-            transform.position = initPosition;
+            transform.position = BeforeDragPosition;
             return;
         }
 
@@ -63,7 +63,12 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             }
 
             // アイコンの入れ替え
-            onSwitch?.Invoke(gameObject, hitIcon.gameObject);
+            onSwitch?.Invoke(this, hitIcon);
         }
+    }
+
+    // ドラッグする前の座標の更新
+    public void UpdateBeforeDragPosition(Vector3 position) {
+        BeforeDragPosition = new Vector3(position.x, position.y, 0.0f);
     }
 }

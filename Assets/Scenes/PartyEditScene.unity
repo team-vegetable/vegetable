@@ -295,8 +295,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 451649985}
   m_HandleRect: {fileID: 451649984}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9118071
+  m_Value: -0.0000006364457
+  m_Size: 0.85469747
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -721,41 +721,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 240873342}
   m_CullTransparentMesh: 1
---- !u!1 &310197364
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 310197365}
-  m_Layer: 0
-  m_Name: ReserveVegetables
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &310197365
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 310197364}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1389168817}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0, y: 0}
 --- !u!1 &375181554
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,7 +1447,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vegetableIcon: {fileID: 3266691091236551306, guid: 859eddb3f23efe9448e5be69045be9c2, type: 3}
-  vegetableImages: []
   mainVegetablesParent: {fileID: 1394819778}
   reserveVegetablesParent: {fileID: 1181676015}
 --- !u!1 &849172186
@@ -1824,7 +1788,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -991.5, y: 0}
+  m_AnchoredPosition: {x: -991.49994, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1181676016
@@ -2261,7 +2225,6 @@ RectTransform:
   m_Children:
   - {fileID: 1394819778}
   - {fileID: 1049015803}
-  - {fileID: 310197365}
   - {fileID: 1194042653}
   - {fileID: 144445918}
   m_Father: {fileID: 721642418}

@@ -51,7 +51,7 @@ public class PartyEditModel : MonoBehaviour {
     }
 
     // アイコンの入れ替え
-    private void SwitchIcon(GameObject moveIcon, GameObject hitIcon) {
+    private void SwitchIcon(UnitIcon moveIcon, UnitIcon hitIcon) {
         // サブ同士の入れ替えは受け付けない(上手く動かない)
         if (reserveVegetableObjects.Any(e => e == moveIcon) && reserveVegetableObjects.Any(e => e == hitIcon)) {
             return;
@@ -61,9 +61,15 @@ public class PartyEditModel : MonoBehaviour {
         var hitSiblingIndex = hitIcon.transform.GetSiblingIndex();
 
         // メイン同士の入れ替え
-        if (mainVegetableObjects.Any(e => e == moveIcon) && mainVegetableObjects.Any(e => e == hitIcon)) {
-            moveIcon.transform.SetSiblingIndex(hitSiblingIndex);
-            hitIcon.transform.SetSiblingIndex(moveSiblingIndex);
+        if (mainVegetableObjects.Any(e => e == moveIcon.gameObject) && mainVegetableObjects.Any(e => e == hitIcon.gameObject)) {
+            var moveBeforeDragPosition = moveIcon.BeforeDragPosition;
+            var hitBeforeDragPosition = hitIcon.BeforeDragPosition;
+
+            moveIcon.transform.position = hitIcon.BeforeDragPosition;
+            hitIcon.transform.position = moveIcon.BeforeDragPosition;
+
+            moveIcon.UpdateBeforeDragPosition(hitBeforeDragPosition);
+            hitIcon.UpdateBeforeDragPosition(moveBeforeDragPosition);
         }
         else {
             // メインとサブの入れ替えは一旦コメントアウト
