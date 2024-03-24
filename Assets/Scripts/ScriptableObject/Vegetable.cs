@@ -21,6 +21,10 @@ public class Vegetable : ScriptableObject
     [SerializeField] private Sprite icon = null;
     public Sprite Icon { get => icon; }
 
+    [Header("バトルに使用する画像")]
+    [SerializeField] private Sprite battleSprite = null;
+    public Sprite BattleSprite { get => battleSprite; }
+
     // 野菜ごとのID
     public enum VEGETABLE {
         // 人参

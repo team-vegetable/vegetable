@@ -1,34 +1,28 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
-//　パーティー編成画面のUIの管理
-public class PartyEditUIHandler: MonoBehaviour
-{
+// パーティ編成画面のモデル
+public class PartyEditModel : MonoBehaviour {
     // 野菜のアイコンのプレハブ
     [SerializeField] private UnitIcon vegetableIcon = null;
-
-    // バトルシーンに遷移させるボタン(テスト用)
-    [SerializeField] private Button transitionBattleSceneButton = null;
-    // 保存ボタン
-    [SerializeField] private Button saveButton = null;
     // 戦闘に使用する野菜を格納する親オブジェクト
     [SerializeField] private Transform mainVegetablesParent = null;
     // サブの野菜を格納する親オブジェクト
     [SerializeField] private Transform reserveVegetablesParent = null;
 
+    // 戦闘で使用するオブジェクトのリスト
     private readonly List<GameObject> mainVegetableObjects = new();
+    // サブで使用するオブジェクトのリスト
     private readonly List<GameObject> reserveVegetableObjects = new();
 
+    // 野菜の座標
+    private readonly List<Vector2> VEGETABLE_POSITIONS = new() {
+        new(-152f, -351f), new(0, -92), new(183, 160)
+    };
+
     private void Start() {
-        //saveButton.onClick.RemoveAllListeners();
-        //saveButton.onClick.AddListener(OnClickSaveButton);
-
-        //transitionBattleSceneButton.onClick.RemoveAllListeners();
-        //transitionBattleSceneButton.onClick.AddListener(OnClickTransitionBattleSceneButton);
-
         // セーブデータが存在すれば保存データ読み込み
         if (QuickSave.Exists(VegetableConstData.PARTY_DATA)) {
             var mainVegetableIDs = QuickSave.Load<List<int>>(VegetableConstData.PARTY_DATA, "MainVegetableIDs");
@@ -41,17 +35,9 @@ public class PartyEditUIHandler: MonoBehaviour
                     continue;
                 }
                 var icon = Instantiate(vegetableIcon, mainVegetablesParent);
+                icon.GetComponent<RectTransform>().anchoredPosition = VEGETABLE_POSITIONS[index];
                 icon.Init(asset, SwitchIcon);
             }
-
-            //foreach (var id in mainVegetableIDs) {
-            //    var asset = vegtableAssets.FirstOrDefault(e => e.ID == id);
-            //    if (asset == null) {
-            //        continue;
-            //    }
-            //    var icon = Instantiate(vegetableIcon, mainVegetablesParent);
-            //    icon.Init(asset, SwitchIcon);
-            //}
         }
 
         // メインの野菜オブジェクトを取得
@@ -102,16 +88,8 @@ public class PartyEditUIHandler: MonoBehaviour
         }
     }
 
-    // メインからサブに入れ替えたかどうか
-    private bool IsSwitchingMainToSub(GameObject moveIcon, GameObject hitIcon) {
-        if (mainVegetableObjects.Any(e => e == moveIcon) && reserveVegetableObjects.Any(e => e == hitIcon)) {
-            return true;
-        }
-        return false;
-    }
-
-    // 保存ボタンを押したとき
-    private void OnClickSaveButton() {
+    // 戦闘で使用する野菜の保存を行う
+    public void SaveMainVegetables() {
         // 戦闘に使用する野菜の取得
         List<int> mainVegetableIDs = new();
         foreach (Transform child in mainVegetablesParent.transform) {
@@ -121,5 +99,13 @@ public class PartyEditUIHandler: MonoBehaviour
 
         // 戦闘に使用する野菜の保存
         QuickSave.Save(VegetableConstData.PARTY_DATA, "MainVegetableIDs", mainVegetableIDs);
+    }
+
+    // メインからサブに入れ替えたかどうか
+    private bool IsSwitchingMainToSub(GameObject moveIcon, GameObject hitIcon) {
+        if (mainVegetableObjects.Any(e => e == moveIcon) && reserveVegetableObjects.Any(e => e == hitIcon)) {
+            return true;
+        }
+        return false;
     }
 }

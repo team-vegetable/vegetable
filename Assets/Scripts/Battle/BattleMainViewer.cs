@@ -1,9 +1,6 @@
-using Cysharp.Threading.Tasks;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.U2D;
 using UnityEngine.UI;
 
 // バトルの表示関係を扱う
@@ -26,11 +23,6 @@ public class BattleMainViewer : MonoBehaviour {
     // 残り時間のタイマーをスタートさせる
     public void SetTimerText(float timer) {
         timeText.text = $"残り{(int)timer}秒";
-    }
-
-    // 野菜のアイコンのセット
-    public void SetIcon(Sprite sprite, int index) {
-        icons[index].sprite = sprite;
     }
 
     // 野菜のアイコンのセット

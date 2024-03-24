@@ -26,7 +26,7 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         image = GetComponent<Image>();
         canvas = GetComponent<Canvas>();
 
-        image.sprite = Vegetable.Icon;
+        image.sprite = Vegetable.BattleSprite;
     }
 
     // ドラッグ開始
