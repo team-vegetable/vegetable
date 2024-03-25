@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UniRx;
@@ -13,30 +12,35 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private Image image = null;
     // キャンバス
     private Canvas canvas = null;
-    // アイコンを入れ替えたときのイベント
-    private UnityAction<UnitIcon, UnitIcon> onSwitch = null;
     // スクロール
     private ScrollRect scrollRect = null;
-    // クリックしたときの座標
-    private Vector2 downPosition = new();
     // 長押ししているかどうか
     private bool isLongPress = false;
+    // スクロール対象かどうか
+    private bool isSchollObject = false;
 
     // 野菜のデータ
     public Vegetable Vegetable { get; private set; }
     // ドラッグする前の座標
     public Vector3 BeforeDragPosition { get; private set; }
 
-    public void Init(Vegetable vegetable, ScrollRect scrollRect, UnityAction<UnitIcon, UnitIcon> callback) {
+    // アイコンを入れ替えたときのイベント
+    private readonly Subject<(UnitIcon, UnitIcon)> onSwitch = new();
+    public IObservable<(UnitIcon, UnitIcon)> OnSwitch => onSwitch;
+
+    // 初期化
+    public void Init(Vegetable vegetable, ScrollRect scrollRect, bool isSchollObject = false) {
         Vegetable = vegetable;
-        onSwitch = callback;
         this.scrollRect = scrollRect;
+        this.isSchollObject = isSchollObject;
 
         image = GetComponent<Image>();
         canvas = GetComponent<Canvas>();
 
         image.sprite = Vegetable.BattleSprite;
-        BeforeDragPosition = new Vector3(transform.position.x, transform.position.y, 0.0f);
+        // BeforeDragPosition = new Vector3(transform.position.x, transform.position.y, 0.0f);
+        //BeforeDragPosition = GetComponent<RectTransform>().localPosition;
+        //Debug.Log(BeforeDragPosition);
 
         // 長押しのイベントの登録
         var eventTrigger = GetComponent<ObservableEventTrigger>();
@@ -56,7 +60,7 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // ドラッグ中
     public void OnDrag(PointerEventData eventData) {
         // 長押しでなければ、スクロールビューを動かす
-        if (!isLongPress) {
+        if (isSchollObject && !isLongPress) {
             SetScrollView(eventData);
             return;
         }
@@ -73,7 +77,7 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         // 正しく入れ替えることができなかった時は初期座標に戻す
         if (raycastResults.Count == 1 && raycastResults[0].gameObject == gameObject) {
-            transform.position = BeforeDragPosition;
+            transform.localPosition = Vector3.zero;
             return;
         }
 
@@ -87,14 +91,13 @@ public class UnitIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             }
 
             // アイコンの入れ替え
-            onSwitch?.Invoke(this, hitIcon);
+            onSwitch.OnNext((this, hitIcon));
         }
     }
 
     // クリックしたとき
     public void OnPointerDown(PointerEventData eventData) {
         isLongPress = false;
-        downPosition = eventData.position;
     }
 
     // ドラッグする前の座標の更新

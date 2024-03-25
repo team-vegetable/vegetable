@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UniRx;
 
 // パーティ編成画面のモデル
 public class PartyEditModel : MonoBehaviour {
     // 野菜のアイコンのプレハブ
-    [SerializeField] private UnitIcon vegetableIcon = null;
+    [SerializeField] private GameObject vegetableIcon = null;
     // 戦闘に使用する野菜を格納する親オブジェクト
     [SerializeField] private Transform mainVegetablesParent = null;
     // サブの野菜を格納する親オブジェクト
@@ -37,29 +37,41 @@ public class PartyEditModel : MonoBehaviour {
                 if (asset == null) {
                     continue;
                 }
-                var icon = Instantiate(vegetableIcon, mainVegetablesParent);
-                icon.GetComponent<RectTransform>().anchoredPosition = VEGETABLE_POSITIONS[index];
-                icon.Init(asset, scrollRect, SwitchIcon);
+
+                var prefab = Instantiate(vegetableIcon, mainVegetablesParent);
+                prefab.GetComponent<RectTransform>().anchoredPosition = VEGETABLE_POSITIONS[index];
+
+                var icon = prefab.transform.GetChild(0).GetComponent<UnitIcon>();
+                icon.Init(asset, scrollRect, false);
+                icon.OnSwitch.Subscribe(pair => {
+                    var (moveIcon, hitIcon) = pair;
+                    SwitchIcon(moveIcon, hitIcon);
+                }).AddTo(this);
             }
 
-            for (int index = 0; index < 20; index++) {
+            for (int index = 0; index < 5; index++) {
                 var asset = vegtableAssets.FirstOrDefault(e => e.ID == 1);
                 if (asset == null) {
                     continue;
                 }
-                var icon = Instantiate(vegetableIcon, reserveVegetablesParent);
-                // icon.GetComponent<RectTransform>().anchoredPosition = VEGETABLE_POSITIONS[index];
-                icon.Init(asset, scrollRect, SwitchIcon);
+
+                var prefab = Instantiate(vegetableIcon, reserveVegetablesParent);
+                var icon = prefab.transform.GetChild(0).GetComponent<UnitIcon>();
+                icon.Init(asset, scrollRect, false);
+                icon.OnSwitch.Subscribe(pair => {
+                    var (moveIcon, hitIcon) = pair;
+                    SwitchIcon(moveIcon, hitIcon);
+                }).AddTo(this);
             }
         }
 
         // メインの野菜オブジェクトを取得
         foreach (Transform child in mainVegetablesParent.transform) {
-            mainVegetableObjects.Add(child.gameObject);
+            mainVegetableObjects.Add(child.GetChild(0).gameObject);
         }
         // サブの野菜オブジェクトを取得
         foreach (Transform child in reserveVegetablesParent.transform) {
-            reserveVegetableObjects.Add(child.gameObject);
+            reserveVegetableObjects.Add(child.GetChild(0).gameObject);
         }
     }
 
@@ -70,38 +82,29 @@ public class PartyEditModel : MonoBehaviour {
             return;
         }
 
-        var moveSiblingIndex = moveIcon.transform.GetSiblingIndex();
-        var hitSiblingIndex = hitIcon.transform.GetSiblingIndex();
-
         // メイン同士の入れ替え
         if (IsSwitchingMain(moveIcon.gameObject, hitIcon.gameObject)) {
-            // 座標の入れ替え
-            var moveBeforeDragPosition = moveIcon.BeforeDragPosition;
-            var hitBeforeDragPosition = hitIcon.BeforeDragPosition;
-            moveIcon.transform.position = hitIcon.BeforeDragPosition;
-            hitIcon.transform.position = moveIcon.BeforeDragPosition;
-
-            // 座標の更新
-            moveIcon.UpdateBeforeDragPosition(hitBeforeDragPosition);
-            hitIcon.UpdateBeforeDragPosition(moveBeforeDragPosition);
+            var moveIconParent = moveIcon.transform.parent;
+            var hitIconParent = hitIcon.transform.parent;
+            moveIcon.transform.SetParent(hitIconParent);
+            hitIcon.transform.SetParent(moveIconParent);
+            moveIcon.transform.localPosition = Vector3.zero;
+            hitIcon.transform.localPosition = Vector3.zero;
         }
         // メインとサブの入れ替え
         else {
-            //moveIcon.transform.SetParent(null);
-            //hitIcon.transform.SetParent(null);
-
-            // メインからサブに入れ替えた場合
-            if (IsSwitchingMainToSub(moveIcon.gameObject, hitIcon.gameObject)) {
-                moveIcon.transform.SetParent(reserveVegetablesParent);
-                hitIcon.transform.SetParent(mainVegetablesParent);
-                hitIcon.transform.position = moveIcon.BeforeDragPosition;
-            }
-            // サブからメインに入れ替えた場合
-            else {
-                moveIcon.transform.SetParent(mainVegetablesParent);
-                hitIcon.transform.SetParent(reserveVegetablesParent);
-                moveIcon.transform.position = hitIcon.BeforeDragPosition;
-            }
+            //// メインからサブに入れ替えた場合
+            //if (IsSwitchingMainToSub(moveIcon.gameObject, hitIcon.gameObject)) {
+            //    moveIcon.transform.SetParent(reserveVegetablesParent);
+            //    hitIcon.transform.SetParent(mainVegetablesParent);
+            //    hitIcon.transform.position = moveIcon.BeforeDragPosition;
+            //}
+            //// サブからメインに入れ替えた場合
+            //else {
+            //    moveIcon.transform.SetParent(mainVegetablesParent);
+            //    hitIcon.transform.SetParent(reserveVegetablesParent);
+            //    moveIcon.transform.position = hitIcon.BeforeDragPosition;
+            //}
 
             //moveIcon.transform.SetSiblingIndex(hitSiblingIndex);
             //hitIcon.transform.SetSiblingIndex(moveSiblingIndex);
